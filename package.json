@@ -1,6 +1,16 @@
 {
   "private": true,
   "workspaces": [
-    "esbuild-node-externals"
-  ]
+    "esbuild-node-externals",
+    "examples/*"
+  ],
+  "scripts": {
+    "prettier": "prettier --write '**/*.{js,ts,tsx,json,md,graphql,yml}'"
+  },
+  "prettier": {
+    "singleQuote": true
+  },
+  "devDependencies": {
+    "prettier": "2.1.2"
+  }
 }

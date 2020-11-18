@@ -42,3 +42,6 @@ jobs:
 
       - name: Build
         run: yarn workspace esbuild-node-externals build
+
+      - name: Test examples
+        run: yarn workspace example-basic build

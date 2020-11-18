@@ -1,2 +1,3 @@
 # esbuild-node-externals
-Easily exclude node modules in Esbuild
+
+[Esbuild](https://github.com/evanw/esbuild) plugin to easily exclude node modules during builds.
