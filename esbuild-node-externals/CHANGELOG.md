@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.0.1](https://www.github.com/pradel/esbuild-node-externals/compare/v1.0.0...v1.0.1) (2020-11-18)
+
+
+### Bug Fixes
+
+* **ci:** fix release script ([c546396](https://www.github.com/pradel/esbuild-node-externals/commit/c546396eecda193c98e2949b0d9d4764e76facff))
+
 ## 1.0.0 (2020-11-18)
 
 
