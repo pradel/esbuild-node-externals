@@ -80,7 +80,7 @@ Make package.json `optionalDependencies` external.
 
 ## Inspiration
 
-This package and the implementation are inspired by the awesome work of @liady on [webpack-node-externals](https://github.com/liady/webpack-node-externals) for webpack and @Septh on [rollup-plugin-node-externals](https://github.com/Septh/rollup-plugin-node-externals) for rollup.
+This package and the implementation are inspired by the work of @liady on [webpack-node-externals](https://github.com/liady/webpack-node-externals) for webpack and @Septh on [rollup-plugin-node-externals](https://github.com/Septh/rollup-plugin-node-externals) for rollup.
 
 ## License
 
