@@ -56,23 +56,23 @@ esbuild.build({
 });
 ```
 
-### `options.packagePath` (default to `'package.json'`)
+#### `options.packagePath` (default to `'package.json'`)
 
 Path to your `package.json`. Can be a string or an array of strings for monorepos.
 
-### `options.dependencies` (default to `true`)
+#### `options.dependencies` (default to `true`)
 
 Make package.json `dependencies` external.
 
-### `options.devDependencies` (default to `true`)
+#### `options.devDependencies` (default to `true`)
 
 Make package.json `devDependencies` external.
 
-### `options.peerDependencies` (default to `true`)
+#### `options.peerDependencies` (default to `true`)
 
 Make package.json `peerDependencies` external.
 
-### `options.optionalDependencies` (default to `true`)
+#### `options.optionalDependencies` (default to `true`)
 
 Make package.json `optionalDependencies` external.
 
