@@ -2,6 +2,7 @@
   "name": "esbuild-node-externals",
   "version": "1.0.0",
   "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
     "watch": "tsc --watch"
@@ -9,6 +10,16 @@
   "repository": "https://github.com/pradel/esbuild-node-externals.git",
   "author": "Leo Pradel <pradel.leo@gmail.com>",
   "license": "MIT",
+  "keywords": [
+    "esbuild",
+    "node_modules",
+    "esbuild-plugin",
+    "bundle"
+  ],
+  "files": [
+    "dist",
+    "src"
+  ],
   "peerDependencies": {
     "esbuild": "^0.8.0"
   },
