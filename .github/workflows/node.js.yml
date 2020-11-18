@@ -42,5 +42,3 @@ jobs:
 
       - name: Build
         run: yarn workspace esbuild-node-externals build
-
-      - run: npm test
