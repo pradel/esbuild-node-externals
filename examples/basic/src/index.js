@@ -1,4 +1,8 @@
 const Koa = require('koa');
+const test = require('koa/lib/context');
+const test2 = require('./koa/koa');
+
+console.log(test, test2);
 
 const app = new Koa();
 
