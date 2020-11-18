@@ -39,9 +39,47 @@ esbuild.build({
 
 ## Options
 
+When calling this package, you can pass an `options` object.
+
+```js
+// Your bundler file
+const esbuild = require('esbuild');
+const { nodeExternalsPlugin } = require('esbuild-node-externals');
+
+esbuild.build({
+  // ...
+  plugins: [
+    nodeExternalsPlugin({
+      packagePath: 'path/to/package.json',
+    }),
+  ],
+});
+```
+
+### `options.packagePath` (default to `'package.json'`)
+
+Path to your `package.json`. Can be a string or an array of strings for monorepos.
+
+### `options.dependencies` (default to `true`)
+
+Make package.json `dependencies` external.
+
+### `options.devDependencies` (default to `true`)
+
+Make package.json `devDependencies` external.
+
+### `options.peerDependencies` (default to `true`)
+
+Make package.json `peerDependencies` external.
+
+### `options.optionalDependencies` (default to `true`)
+
+Make package.json `optionalDependencies` external.
+
 ## Inspiration
 
-This package and the implementation are highly inspired by the awesome work of @liady on [webpack-node-externals](https://github.com/liady/webpack-node-externals) package made for webpack. I tried to keep the same options name so if you are switching from webpack to esbuild the migration will be easier.
+This package and the implementation are inspired by the awesome work of @liady on [webpack-node-externals](https://github.com/liady/webpack-node-externals) for webpack and @Septh on [rollup-plugin-node-externals
+](https://github.com/Septh/rollup-plugin-node-externals) for rollup.
 
 ## License
 
