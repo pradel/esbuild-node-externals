@@ -1,0 +1,15 @@
+{
+  "name": "esbuild-node-externals",
+  "version": "0.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch"
+  },
+  "repository": "https://github.com/pradel/esbuild-node-externals.git",
+  "author": "Leo Pradel <pradel.leo@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "4.0.5"
+  }
+}
