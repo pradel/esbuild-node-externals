@@ -58,7 +58,9 @@ esbuild.build({
 
 #### `options.packagePath`
 
-Path to your `package.json`. Can be a string or an array of strings for monorepos.
+Path to your `package.json`. Can be a string or an array of strings. If you are using a monorepo you can provide a list of all the `package.json` to check.
+
+If this option is not specified the default behavior is to start with the current directory's package.json then go up scan for all package.json files in parent directories recursively until either the root git directory is reached or until no other package.json can be found.
 
 #### `options.dependencies` (default to `true`)
 
