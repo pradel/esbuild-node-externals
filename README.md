@@ -56,7 +56,7 @@ esbuild.build({
 });
 ```
 
-#### `options.packagePath` (default to `'package.json'`)
+#### `options.packagePath`
 
 Path to your `package.json`. Can be a string or an array of strings for monorepos.
 
