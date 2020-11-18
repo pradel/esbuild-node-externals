@@ -1,0 +1,40 @@
+on:
+  push:
+    branches:
+      - main
+
+name: release-please
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: GoogleCloudPlatform/release-please-action@v2.6.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          release-type: node
+          package-name: esbuild-node-externals
+          changelog-types: '[{"type":"feat","section":"Features","hidden":false},{"type":"fix","section":"Bug Fixes","hidden":false},{"type":"chore","section":"Miscellaneous","hidden":false},{"type":"docs","section":"Documentation","hidden":false},{"type":"test","section":"Tests","hidden":false}]'
+          path: esbuild-node-externals
+
+      - uses: actions/checkout@v2
+        if: ${{ steps.release.outputs.release_created }}
+
+      - name: Use Node 12
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+        if: ${{ steps.release.outputs.release_created }}
+
+      - name: Install dependencies
+        run: yarn install --immutable
+        if: ${{ steps.release.outputs.release_created }}
+
+      - name: Build esbuild-node-externals
+        run: yarn workspace esbuild-node-externals build
+        if: ${{ steps.release.outputs.release_created }}
+
+      - name: Publish esbuild-node-externals npm package
+        run: yarn workspace esbuild-node-externals npm publish
+        env:
+          NPM_TOKEN: ${{secrets.NPM_TOKEN}}
+        if: ${{ steps.release.outputs.release_created }}
