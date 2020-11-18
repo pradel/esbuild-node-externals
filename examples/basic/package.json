@@ -1,0 +1,15 @@
+{
+  "name": "example-basic",
+  "private": true,
+  "scripts": {
+    "start": "node dist/main.js",
+    "build": "node bundle.js"
+  },
+  "dependencies": {
+    "koa": "2.13.0"
+  },
+  "devDependencies": {
+    "esbuild": "0.8.10",
+    "esbuild-node-externals": "workspace:esbuild-node-externals"
+  }
+}

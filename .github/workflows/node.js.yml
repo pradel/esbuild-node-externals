@@ -15,7 +15,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x]
+        node-version: [12.x, 14.x]
 
     steps:
       - uses: actions/checkout@v2
@@ -42,3 +42,6 @@ jobs:
 
       - name: Build
         run: yarn workspace esbuild-node-externals build
+
+      - name: Test examples
+        run: yarn workspace example-basic build
