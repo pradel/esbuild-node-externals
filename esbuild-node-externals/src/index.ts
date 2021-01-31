@@ -46,8 +46,6 @@ export const nodeExternalsPlugin = (paramsOptions: Options = {}): Plugin => {
           moduleName = `${split[0]}/${split[1]}`;
         }
 
-        console.log(args.path, moduleName);
-
         // Mark the module as external so it is not resolved
         if (nodeModules.includes(moduleName)) {
           return { path: args.path, external: true };
