@@ -5,6 +5,28 @@ __metadata:
   version: 4
   cacheKey: 7
 
+"@accounts/rest-client@npm:0.30.0":
+  version: 0.30.0
+  resolution: "@accounts/rest-client@npm:0.30.0"
+  dependencies:
+    "@accounts/types": ^0.30.0
+    lodash: ^4.17.15
+    tslib: 2.0.0
+  peerDependencies:
+    "@accounts/client": ^0.19.0
+  checksum: fd331370c6dcedb9e90cedddc61bcfc1cb471d0065c15f12b4cf45c5bae4cc877ddd9d7314dde15420c2888f586c21f94a5eb94e415a9291269472044107ee9b
+  languageName: node
+  linkType: hard
+
+"@accounts/types@npm:^0.30.0":
+  version: 0.30.0
+  resolution: "@accounts/types@npm:0.30.0"
+  dependencies:
+    tslib: 2.0.0
+  checksum: ec5af71f74b6a5bab1c6d73b16c2d049f4b90c7e47f9b0bf85f7ef942f5ab52f07105578c2fa582d2633338bae57b1d00b07e6fd356b52f3284b6dd56e26bbeb
+  languageName: node
+  linkType: hard
+
 "@types/node@npm:14.14.22":
   version: 14.14.22
   resolution: "@types/node@npm:14.14.22"
@@ -164,6 +186,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "example-basic@workspace:examples/basic"
   dependencies:
+    "@accounts/rest-client": 0.30.0
     esbuild: 0.8.38
     esbuild-node-externals: "workspace:esbuild-node-externals"
     koa: 2.13.1
@@ -312,6 +335,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash@npm:^4.17.15":
+  version: 4.17.20
+  resolution: "lodash@npm:4.17.20"
+  checksum: c62101d2500c383b5f174a7e9e6fe8098149ddd6e9ccfa85f36d4789446195f5c4afd3cfba433026bcaf3da271256566b04a2bf2618e5a39f6e67f8c12030cb6
+  languageName: node
+  linkType: hard
+
 "media-typer@npm:0.3.0":
   version: 0.3.0
   resolution: "media-typer@npm:0.3.0"
@@ -453,6 +483,13 @@ __metadata:
   version: 1.0.0
   resolution: "toidentifier@npm:1.0.0"
   checksum: 95720e8a0f98f1525f50ccbecbc2a23f0a1b4e448de03819dbbeda03adf0d2010fe64525fbc9d549765242550d341bb891672e4ac0b2cac58613cdd742324255
+  languageName: node
+  linkType: hard
+
+"tslib@npm:2.0.0":
+  version: 2.0.0
+  resolution: "tslib@npm:2.0.0"
+  checksum: a7369a224f12e223fb42f2a720389601a24a1e1c96c55bf0d8d4b60c131e574c175ae23578b8d1bd3f4ec790c7e0a82b43733f022f866d48a23aeadd3910755d
   languageName: node
   linkType: hard
 

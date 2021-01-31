@@ -6,6 +6,7 @@
     "build": "node bundle.js"
   },
   "dependencies": {
+    "@accounts/rest-client": "0.30.0",
     "koa": "2.13.1"
   },
   "devDependencies": {

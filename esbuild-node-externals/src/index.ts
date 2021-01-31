@@ -38,7 +38,15 @@ export const nodeExternalsPlugin = (paramsOptions: Options = {}): Plugin => {
       // On every module resolved, we check if the module name should be an external
       build.onResolve({ namespace: 'file', filter: /.*/ }, (args) => {
         // To allow sub imports from packages we take only the first path to deduct the name
-        const moduleName = args.path.split('/')[0];
+        let moduleName = args.path.split('/')[0];
+
+        // In case of scoped package
+        if (args.path.startsWith('@')) {
+          const split = args.path.split('/');
+          moduleName = `${split[0]}/${split[1]}`;
+        }
+
+        console.log(args.path, moduleName);
 
         // Mark the module as external so it is not resolved
         if (nodeModules.includes(moduleName)) {
