@@ -1,5 +1,17 @@
 # Changelog
 
+### [1.0.2](https://www.github.com/pradel/esbuild-node-externals/compare/v1.0.1...v1.0.2) (2021-01-31)
+
+
+### Bug Fixes
+
+* scoped packages are now marked as externals ([#10](https://www.github.com/pradel/esbuild-node-externals/issues/10)) ([85cb23c](https://www.github.com/pradel/esbuild-node-externals/commit/85cb23c231e3073c7347020636aca4a01df1af5e))
+
+
+### Miscellaneous
+
+* upgrade deps ([#8](https://www.github.com/pradel/esbuild-node-externals/issues/8)) ([d1a283f](https://www.github.com/pradel/esbuild-node-externals/commit/d1a283f3ab2ca2d13952af1b1e1ab387f7015083))
+
 ### [1.0.1](https://www.github.com/pradel/esbuild-node-externals/compare/v1.0.0...v1.0.1) (2020-11-18)
 
 
