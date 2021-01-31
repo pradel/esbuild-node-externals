@@ -1,8 +1,9 @@
 const Koa = require('koa');
 const test = require('koa/lib/context');
+const restClient = require('@accounts/rest-client');
 const test2 = require('./koa/koa');
 
-console.log(test, test2);
+console.log(test, test2, restClient);
 
 const app = new Koa();
 
