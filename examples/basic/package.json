@@ -6,10 +6,10 @@
     "build": "node bundle.js"
   },
   "dependencies": {
-    "koa": "2.13.0"
+    "koa": "2.13.1"
   },
   "devDependencies": {
-    "esbuild": "0.8.10",
+    "esbuild": "0.8.38",
     "esbuild-node-externals": "workspace:esbuild-node-externals"
   }
 }

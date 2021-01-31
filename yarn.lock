@@ -5,10 +5,10 @@ __metadata:
   version: 4
   cacheKey: 7
 
-"@types/node@npm:14.14.8":
-  version: 14.14.8
-  resolution: "@types/node@npm:14.14.8"
-  checksum: fa8c40702593d0a84eda8ca279072482e9b30c6d62df51eedc7115e6e8623f3b67e839f87d0e43b2d5880fd7b6b8825c0d15ffd836ee50a9f6661a3aa9b20b16
+"@types/node@npm:14.14.22":
+  version: 14.14.22
+  resolution: "@types/node@npm:14.14.22"
+  checksum: e46e32685b4d0261779c13c10ba3ff220cfa714b5c12f8f571fd52cc309546bdbc8ffc86cbad20559ad88e7b17e66fc51c98b067d8c3766597092c05df157b9b
   languageName: node
   linkType: hard
 
@@ -95,17 +95,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"depd@npm:^1.1.2, depd@npm:~1.1.2":
-  version: 1.1.2
-  resolution: "depd@npm:1.1.2"
-  checksum: f45566ff7019a346852f095768a380778ed544de24e103b479fd5d3e61982d670efbb5234c09d0588d7fdb09c26c48283d7150e4be5e6ce5d3d37cd268d75c4d
-  languageName: node
-  linkType: hard
-
-"depd@npm:~2.0.0":
+"depd@npm:^2.0.0, depd@npm:~2.0.0":
   version: 2.0.0
   resolution: "depd@npm:2.0.0"
   checksum: 20726d843f5ab5e933211fcb5a440a1a3986ef9d6f85d38cf1eae815ea3cc12fa4436bd35a38e21bdb391a021b57f2d97b9f856873852506acac1b07ac913ba4
+  languageName: node
+  linkType: hard
+
+"depd@npm:~1.1.2":
+  version: 1.1.2
+  resolution: "depd@npm:1.1.2"
+  checksum: f45566ff7019a346852f095768a380778ed544de24e103b479fd5d3e61982d670efbb5234c09d0588d7fdb09c26c48283d7150e4be5e6ce5d3d37cd268d75c4d
   languageName: node
   linkType: hard
 
@@ -134,22 +134,22 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "esbuild-node-externals@workspace:esbuild-node-externals"
   dependencies:
-    "@types/node": 14.14.8
-    esbuild: 0.8.10
+    "@types/node": 14.14.22
+    esbuild: 0.8.38
     find-up: 5.0.0
-    tslib: 2.0.3
-    typescript: 4.0.5
+    tslib: 2.1.0
+    typescript: 4.1.3
   peerDependencies:
     esbuild: ^0.8.0
   languageName: unknown
   linkType: soft
 
-"esbuild@npm:0.8.10":
-  version: 0.8.10
-  resolution: "esbuild@npm:0.8.10"
+"esbuild@npm:0.8.38":
+  version: 0.8.38
+  resolution: "esbuild@npm:0.8.38"
   bin:
     esbuild: bin/esbuild
-  checksum: 364c5772cbb5bb4959a37dfa518b02d13e834c8f4da16c71b617e55d93067c11a5447ac1b8831af597167a27d3423f1a177dbf3be491b168e0777c4abf96cdaa
+  checksum: 3463a1e38698792ba6a39073a57be7c80887563aa2e48f644cf95328f9f720e45d964b49cbd2745f220c0042c21a4285e3047f5f64ccb0adb9cc225cacc51a51
   languageName: node
   linkType: hard
 
@@ -164,9 +164,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "example-basic@workspace:examples/basic"
   dependencies:
-    esbuild: 0.8.10
+    esbuild: 0.8.38
     esbuild-node-externals: "workspace:esbuild-node-externals"
-    koa: 2.13.0
+    koa: 2.13.1
   languageName: unknown
   linkType: soft
 
@@ -272,9 +272,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"koa@npm:2.13.0":
-  version: 2.13.0
-  resolution: "koa@npm:2.13.0"
+"koa@npm:2.13.1":
+  version: 2.13.1
+  resolution: "koa@npm:2.13.1"
   dependencies:
     accepts: ^1.3.5
     cache-content-type: ^1.0.0
@@ -283,7 +283,7 @@ __metadata:
     cookies: ~0.8.0
     debug: ~3.1.0
     delegates: ^1.0.0
-    depd: ^1.1.2
+    depd: ^2.0.0
     destroy: ^1.0.4
     encodeurl: ^1.0.2
     escape-html: ^1.0.3
@@ -299,7 +299,7 @@ __metadata:
     statuses: ^1.5.0
     type-is: ^1.6.16
     vary: ^1.1.2
-  checksum: d8dca4c17f1c0c59a0d9df3680c1eec2e0107564f04e306614e236966381a5db49577f9dcb0b1a3cccb74c08319052be9bfbd4bb53a6c4a695bc872607902bc3
+  checksum: d7e5a6f483c2e5b40b14e063951687ac914bdeec8afc58a0e2cc75d5ab931fbf30753b9751932cd31a506abe5f3d4599b2c002ac5ac7a179b9d3304983470afd
   languageName: node
   linkType: hard
 
@@ -404,12 +404,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:2.1.2":
-  version: 2.1.2
-  resolution: "prettier@npm:2.1.2"
+"prettier@npm:2.2.1":
+  version: 2.2.1
+  resolution: "prettier@npm:2.2.1"
   bin:
     prettier: bin-prettier.js
-  checksum: bedc24c568efbcfe45f255558900777e2fabb36bf28ed4c22d2456eb22dfb012d12e566a46472ea5b857a4e9f263e888f7e316527d00bb58188f1820b0b0031a
+  checksum: 92c6c9f4b87eba1f28466edee57dd18c80d00b858edda77d46d1950d20e6e302b68ee255fc91133ba931e63c4577b5ae30da194d9626a8f3c0177778b91bf056
   languageName: node
   linkType: hard
 
@@ -417,7 +417,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "root-workspace-0b6124@workspace:."
   dependencies:
-    prettier: 2.1.2
+    prettier: 2.2.1
   languageName: unknown
   linkType: soft
 
@@ -456,10 +456,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:2.0.3":
-  version: 2.0.3
-  resolution: "tslib@npm:2.0.3"
-  checksum: 447bfca5deaa157806c3f77eaba74d05dd0b38b014e47ce79d98b5c77ce7d91b00a687ba13ca1b5a74d35ca1098ac7a072c0a97fad06f0266612f2a03a6c8e8f
+"tslib@npm:2.1.0":
+  version: 2.1.0
+  resolution: "tslib@npm:2.1.0"
+  checksum: d8f5bdd067611651c6b846c2388f4dc8ba1f5af124e66105f5263d1ad56da17f4b8c6566887ca2f205c5a9758451871ceca87d5d06087af2dca1699c5e33db69
   languageName: node
   linkType: hard
 
@@ -480,23 +480,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-typescript@4.0.5:
-  version: 4.0.5
-  resolution: "typescript@npm:4.0.5"
+typescript@4.1.3:
+  version: 4.1.3
+  resolution: "typescript@npm:4.1.3"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: ce94d4bbb914cc9d6fbd42e1476ab18c3292b262b8ba7ba76cd167a858545207a604e75bf1efbb75b8654c8f85deaa19795c3ef00098d7612855139b4ecc0240
+  checksum: 4f7ab1506ea22c7a1c313ec5b4285e93ce08d709ad6086d02d3096adb399ca339972ee56d1e578213c51dd0fb7b0fad50283c2d3c39642405644458ae29774f8
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@4.0.5#builtin<compat/typescript>":
-  version: 4.0.5
-  resolution: "typescript@patch:typescript@npm%3A4.0.5#builtin<compat/typescript>::version=4.0.5&hash=5bf698"
+"typescript@patch:typescript@4.1.3#builtin<compat/typescript>":
+  version: 4.1.3
+  resolution: "typescript@patch:typescript@npm%3A4.1.3#builtin<compat/typescript>::version=4.1.3&hash=5bf698"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: d4be0bd2a2050b2d7b132cb2a40329178f181543e9d2ac6d1f06babd9f047208558a736a7effdeb28759ae2e815f070b61d10ee2f02cc93a6221a1490f21ffce
+  checksum: 5637a1074cdaed15dbdc109d7e495f00971742fc169b06e758181ac6b091d086f6a7d60d9977dc4572357038c7d798e0786a043eda37d7776537a3d939416a8d
   languageName: node
   linkType: hard
 
