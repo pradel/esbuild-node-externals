@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.0.3](https://www.github.com/pradel/esbuild-node-externals/compare/v1.0.2...v1.0.3) (2021-03-17)
+
+
+### Miscellaneous
+
+* upgrade deps and set esbuild peer dependency to `^0.9.0` ([#11](https://www.github.com/pradel/esbuild-node-externals/issues/11)) ([69689a6](https://www.github.com/pradel/esbuild-node-externals/commit/69689a601a7cb1d317e29279d4800b328c5993b7))
+
 ### [1.0.2](https://www.github.com/pradel/esbuild-node-externals/compare/v1.0.1...v1.0.2) (2021-01-31)
 
 
