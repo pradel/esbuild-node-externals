@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://www.github.com/pradel/esbuild-node-externals/compare/v1.0.3...v1.1.0) (2021-04-08)
+
+
+### Features
+
+* add allowList option ([#14](https://www.github.com/pradel/esbuild-node-externals/issues/14)) ([4d8ace0](https://www.github.com/pradel/esbuild-node-externals/commit/4d8ace040851a5acd72c980985706754a9f559bc))
+
 ### [1.0.3](https://www.github.com/pradel/esbuild-node-externals/compare/v1.0.2...v1.0.3) (2021-03-17)
 
 
