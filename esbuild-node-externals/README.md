@@ -78,6 +78,10 @@ Make package.json `peerDependencies` external.
 
 Make package.json `optionalDependencies` external.
 
+#### `options.allowList` (default to `[]`)
+
+Specify packages which are not marked as external. They will be included in the bundle.
+
 ## Inspiration
 
 This package and the implementation are inspired by the work of @liady on [webpack-node-externals](https://github.com/liady/webpack-node-externals) for webpack and @Septh on [rollup-plugin-node-externals](https://github.com/Septh/rollup-plugin-node-externals) for rollup.

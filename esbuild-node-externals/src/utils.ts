@@ -52,6 +52,7 @@ export const findDependencies = (options: {
   devDependencies: boolean;
   peerDependencies: boolean;
   optionalDependencies: boolean;
+  allowList: string[];
 }): string[] => {
   const packageJsonKeys = [
     options.dependencies && 'dependencies',
@@ -74,7 +75,8 @@ export const findDependencies = (options: {
 
     return packageJsonKeys
       .map((key) => (packageJson[key] ? Object.keys(packageJson[key]) : []))
-      .flat(1);
+      .flat(1)
+      .filter((packageName) => !options.allowList.includes(packageName));
   });
 
   return data.flat(1);

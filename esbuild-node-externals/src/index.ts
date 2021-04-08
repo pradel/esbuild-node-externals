@@ -7,6 +7,7 @@ export interface Options {
   devDependencies?: boolean;
   peerDependencies?: boolean;
   optionalDependencies?: boolean;
+  allowList?: string[];
 }
 
 export const nodeExternalsPlugin = (paramsOptions: Options = {}): Plugin => {
@@ -15,6 +16,7 @@ export const nodeExternalsPlugin = (paramsOptions: Options = {}): Plugin => {
     devDependencies: true,
     peerDependencies: true,
     optionalDependencies: true,
+    allowList: [],
     ...paramsOptions,
     packagePath:
       paramsOptions.packagePath && typeof paramsOptions.packagePath === 'string'
@@ -30,6 +32,7 @@ export const nodeExternalsPlugin = (paramsOptions: Options = {}): Plugin => {
     devDependencies: options.devDependencies,
     peerDependencies: options.peerDependencies,
     optionalDependencies: options.optionalDependencies,
+    allowList: options.allowList,
   });
 
   return {
