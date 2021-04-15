@@ -157,21 +157,21 @@ __metadata:
   resolution: "esbuild-node-externals@workspace:esbuild-node-externals"
   dependencies:
     "@types/node": 14.14.35
-    esbuild: ^0.9.0
+    esbuild: ^0.11.0
     find-up: 5.0.0
     tslib: 2.1.0
     typescript: 4.2.3
   peerDependencies:
-    esbuild: ^0.9.0
+    esbuild: ^0.11.0
   languageName: unknown
   linkType: soft
 
-"esbuild@npm:^0.9.0":
-  version: 0.9.3
-  resolution: "esbuild@npm:0.9.3"
+"esbuild@npm:^0.11.0":
+  version: 0.11.9
+  resolution: "esbuild@npm:0.11.9"
   bin:
     esbuild: bin/esbuild
-  checksum: df44126d955231e8866a84daacba477a71c7c96d9bbc016a3c8fdfa6d1bebc21ee381512df571a6c71f3e666e82339e2c8acf2d797c0445fc9e3f9e784786b75
+  checksum: c3cfd48627e6cbafcc23aa2a6e42a7c4f19a48ead35b40810649bcdddc0bde6f30489fdb77693df9ed0eaeca023fb1ffe9023622e5ab7c9b70030a10b358247e
   languageName: node
   linkType: hard
 
@@ -187,7 +187,7 @@ __metadata:
   resolution: "example-basic@workspace:examples/basic"
   dependencies:
     "@accounts/rest-client": 0.30.0
-    esbuild: ^0.9.0
+    esbuild: ^0.11.0
     esbuild-node-externals: "workspace:esbuild-node-externals"
     koa: 2.13.1
   languageName: unknown
