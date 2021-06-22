@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://www.github.com/pradel/esbuild-node-externals/compare/v1.2.0...v1.3.0) (2021-06-22)
+
+
+### Features
+
+* upgrade esbuild to ^0.12.0 ([#18](https://www.github.com/pradel/esbuild-node-externals/issues/18)) ([4d189f1](https://www.github.com/pradel/esbuild-node-externals/commit/4d189f18f649b1c5bfc0c2713a4ceb1ed455bf8b))
+
 ## [1.2.0](https://www.github.com/pradel/esbuild-node-externals/compare/v1.1.0...v1.2.0) (2021-04-15)
 
 
