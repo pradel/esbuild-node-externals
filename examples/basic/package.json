@@ -7,10 +7,10 @@
   },
   "dependencies": {
     "@accounts/rest-client": "0.30.0",
-    "koa": "2.13.1"
+    "koa": "2.13.4"
   },
   "devDependencies": {
-    "esbuild": "^0.12.0",
+    "esbuild": "^0.13.0",
     "esbuild-node-externals": "workspace:esbuild-node-externals"
   }
 }
