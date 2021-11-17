@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.4.0](https://www.github.com/pradel/esbuild-node-externals/compare/v1.3.0...v1.4.0) (2021-11-17)
+
+
+### Features
+
+* allow allowList to target sub imports ([#20](https://www.github.com/pradel/esbuild-node-externals/issues/20)) ([d7eb235](https://www.github.com/pradel/esbuild-node-externals/commit/d7eb23522424e26fe849c0ce1b51985e358053fd))
+* upgrade esbuild to ^0.13.0 ([#22](https://www.github.com/pradel/esbuild-node-externals/issues/22)) ([52bd661](https://www.github.com/pradel/esbuild-node-externals/commit/52bd661e54891cab5581028fdec51a7040bc2ac6))
+
+
+### Miscellaneous
+
+* upgrade dependencies ([#24](https://www.github.com/pradel/esbuild-node-externals/issues/24)) ([ddac31f](https://www.github.com/pradel/esbuild-node-externals/commit/ddac31fef609d9ac41f9e084bb1202a50820c16c))
+
 ## [1.3.0](https://www.github.com/pradel/esbuild-node-externals/compare/v1.2.0...v1.3.0) (2021-06-22)
 
 
