@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.4.1](https://www.github.com/pradel/esbuild-node-externals/compare/v1.4.0...v1.4.1) (2021-12-08)
+
+
+### Bug Fixes
+
+* adjust the necessary esbuild peer dependency version ([#27](https://www.github.com/pradel/esbuild-node-externals/issues/27)) ([e1c6e78](https://www.github.com/pradel/esbuild-node-externals/commit/e1c6e786ee6e917f0d7c885b97b91ee93cbb30d5))
+
 ## [1.4.0](https://www.github.com/pradel/esbuild-node-externals/compare/v1.3.0...v1.4.0) (2021-11-17)
 
 
