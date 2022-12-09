@@ -1,4 +1,5 @@
-import { Plugin } from 'esbuild';
+import type { Plugin } from 'esbuild';
+
 import { findPackagePaths, findDependencies } from './utils';
 
 export interface Options {
