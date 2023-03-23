@@ -41,6 +41,16 @@ export const nodeExternalsPlugin = (paramsOptions: Options = {}): Plugin => {
     setup(build) {
       // On every module resolved, we check if the module name should be an external
       build.onResolve({ namespace: 'file', filter: /.*/ }, (args) => {
+        // To allow lagecy or dynamic import
+        if (args.kind === 'require-call' ||
+            args.kind === 'dynamic-import' ||
+            args.kind === 'require-resolve' ||
+            args.kind === 'import-rule' ||
+            args.kind === 'url-token'
+        ) {
+          return { path: args.path, external: true };
+        }
+
         // To allow allowList to target sub imports
         if (options.allowList.includes(args.path)) {
           return null;
