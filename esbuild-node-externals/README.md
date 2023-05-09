@@ -80,7 +80,7 @@ Make package.json `optionalDependencies` external.
 
 #### `options.allowList` (default to `[]`)
 
-Specify packages which are not marked as external. They will be included in the bundle.
+An array for the externals to allow, so they will be included in the bundle. Can accept exact strings ('module_name'), regex patterns (/^module_name/), or a function that accepts the module name and returns whether it should be included.
 
 ## Inspiration
 

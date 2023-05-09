@@ -2,6 +2,20 @@ import path from 'path';
 import fs from 'fs';
 import findUp from 'find-up';
 
+export type AllowPredicate = (path: string) => boolean;
+export type AllowList = (string | RegExp)[] | AllowPredicate;
+
+export const createAllowPredicate = (allowList: AllowList): AllowPredicate => {
+  return typeof allowList === 'function'
+    ? allowList
+    : (path: string) =>
+        Boolean(
+          allowList.find((pattern) =>
+            typeof pattern === 'string' ? path === pattern : pattern.test(path)
+          )
+        );
+};
+
 /**
  * Determines if the `child` path is under the `parent` path.
  */
@@ -52,7 +66,7 @@ export const findDependencies = (options: {
   devDependencies: boolean;
   peerDependencies: boolean;
   optionalDependencies: boolean;
-  allowList: string[];
+  allowPredicate?: AllowPredicate | undefined;
 }): string[] => {
   const packageJsonKeys = [
     options.dependencies && 'dependencies',
@@ -73,10 +87,13 @@ export const findDependencies = (options: {
       );
     }
 
-    return packageJsonKeys
+    const packageNames = packageJsonKeys
       .map((key) => (packageJson[key] ? Object.keys(packageJson[key]) : []))
-      .flat(1)
-      .filter((packageName) => !options.allowList.includes(packageName));
+      .flat(1);
+    const { allowPredicate } = options;
+    return allowPredicate
+      ? packageNames.filter((packageName) => !allowPredicate(packageName))
+      : packageNames;
   });
 
   return data.flat(1);
