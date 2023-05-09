@@ -2,6 +2,20 @@ import path from 'path';
 import fs from 'fs';
 import findUp from 'find-up';
 
+export type AllowPredicate = (path: string) => boolean;
+export type AllowList = (string | RegExp)[] | AllowPredicate;
+
+export const createAllowPredicate = (allowList: AllowList): AllowPredicate => {
+  return typeof allowList === 'function'
+    ? allowList
+    : (path: string) =>
+        Boolean(
+          allowList.find((pattern) =>
+            typeof pattern === 'string' ? path === pattern : pattern.test(path)
+          )
+        );
+};
+
 /**
  * Determines if the `child` path is under the `parent` path.
  */
@@ -43,17 +57,6 @@ export const findPackagePaths = (): string[] => {
   return packagePaths;
 };
 
-function getDependencyKeys(map: Record<string, string> = {}, allowWorkspaces: boolean = false): string[] {
-  if (!map) {
-    return [];
-  }
-  if (!allowWorkspaces) {
-    return Object.keys(map);
-  }
-  // Filter out shared workspaces
-  return Object.keys(map)?.filter((depKey) => map[depKey] !== 'workspace:*');
-}
-
 /**
  * Return an array of the package.json dependencies that should be excluded from the build.
  */
@@ -63,8 +66,7 @@ export const findDependencies = (options: {
   devDependencies: boolean;
   peerDependencies: boolean;
   optionalDependencies: boolean;
-  allowList: string[];
-  allowWorkspaces: boolean;
+  allowPredicate?: AllowPredicate | undefined;
 }): string[] => {
   const packageJsonKeys = [
     options.dependencies && 'dependencies',
@@ -85,11 +87,13 @@ export const findDependencies = (options: {
       );
     }
 
-    return packageJsonKeys
-      // Automatically exclude keys for interconnected yarn workspaces.
-      .map((key) => getDependencyKeys(packageJson[key], options.allowWorkspaces))
-      .flat(1)
-      .filter((packageName) => !options.allowList.includes(packageName));
+    const packageNames = packageJsonKeys
+      .map((key) => (packageJson[key] ? Object.keys(packageJson[key]) : []))
+      .flat(1);
+    const { allowPredicate } = options;
+    return allowPredicate
+      ? packageNames.filter((packageName) => !allowPredicate(packageName))
+      : packageNames;
   });
 
   return data.flat(1);

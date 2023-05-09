@@ -1,6 +1,11 @@
 import type { Plugin } from 'esbuild';
 
-import { findPackagePaths, findDependencies } from './utils';
+import {
+  findPackagePaths,
+  findDependencies,
+  AllowList,
+  createAllowPredicate,
+} from './utils';
 
 export interface Options {
   packagePath?: string | string[];
@@ -8,8 +13,7 @@ export interface Options {
   devDependencies?: boolean;
   peerDependencies?: boolean;
   optionalDependencies?: boolean;
-  allowList?: string[];
-  allowWorkspaces?: boolean;
+  allowList?: AllowList;
 }
 
 export const nodeExternalsPlugin = (paramsOptions: Options = {}): Plugin => {
@@ -18,14 +22,15 @@ export const nodeExternalsPlugin = (paramsOptions: Options = {}): Plugin => {
     devDependencies: true,
     peerDependencies: true,
     optionalDependencies: true,
-    allowList: [] as string[],
-    allowWorkspaces: false,
     ...paramsOptions,
     packagePath:
       paramsOptions.packagePath && typeof paramsOptions.packagePath === 'string'
         ? [paramsOptions.packagePath]
         : (paramsOptions.packagePath as string[] | undefined),
   };
+
+  const allowPredicate =
+    options.allowList && createAllowPredicate(options.allowList);
 
   const nodeModules = findDependencies({
     packagePaths: options.packagePath
@@ -35,8 +40,7 @@ export const nodeExternalsPlugin = (paramsOptions: Options = {}): Plugin => {
     devDependencies: options.devDependencies,
     peerDependencies: options.peerDependencies,
     optionalDependencies: options.optionalDependencies,
-    allowList: options.allowList,
-    allowWorkspaces: options.allowWorkspaces,
+    allowPredicate,
   });
 
   return {
@@ -45,7 +49,7 @@ export const nodeExternalsPlugin = (paramsOptions: Options = {}): Plugin => {
       // On every module resolved, we check if the module name should be an external
       build.onResolve({ namespace: 'file', filter: /.*/ }, (args) => {
         // To allow allowList to target sub imports
-        if (options.allowList.includes(args.path)) {
+        if (allowPredicate?.(args.path)) {
           return null;
         }
 
