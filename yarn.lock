@@ -329,7 +329,7 @@ __metadata:
     tslib: ^2.4.1
     typescript: ^4.9.4
   peerDependencies:
-    esbuild: 0.12 - 0.18
+    esbuild: 0.12 - 0.19
   languageName: unknown
   linkType: soft
 
