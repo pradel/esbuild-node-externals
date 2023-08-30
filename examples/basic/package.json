@@ -10,7 +10,7 @@
     "koa": "2.13.4"
   },
   "devDependencies": {
-    "esbuild": "^0.18.0",
+    "esbuild": "^0.19.2",
     "esbuild-node-externals": "workspace:esbuild-node-externals"
   }
 }
