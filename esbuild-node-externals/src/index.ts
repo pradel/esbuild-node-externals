@@ -14,6 +14,7 @@ export interface Options {
   peerDependencies?: boolean;
   optionalDependencies?: boolean;
   allowList?: AllowList;
+  allowWorkspaces?: boolean;
 }
 
 export const nodeExternalsPlugin = (paramsOptions: Options = {}): Plugin => {
@@ -22,6 +23,7 @@ export const nodeExternalsPlugin = (paramsOptions: Options = {}): Plugin => {
     devDependencies: true,
     peerDependencies: true,
     optionalDependencies: true,
+    allowWorkspaces: false,
     ...paramsOptions,
     packagePath:
       paramsOptions.packagePath && typeof paramsOptions.packagePath === 'string'
@@ -41,6 +43,7 @@ export const nodeExternalsPlugin = (paramsOptions: Options = {}): Plugin => {
     peerDependencies: options.peerDependencies,
     optionalDependencies: options.optionalDependencies,
     allowPredicate,
+    allowWorkspaces: options.allowWorkspaces,
   });
 
   return {

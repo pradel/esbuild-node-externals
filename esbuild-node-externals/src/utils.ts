@@ -57,6 +57,20 @@ export const findPackagePaths = (): string[] => {
   return packagePaths;
 };
 
+function getDependencyKeys(
+  map: Record<string, string> = {},
+  allowWorkspaces: boolean = false
+): string[] {
+  if (!map) {
+    return [];
+  }
+  if (!allowWorkspaces) {
+    return Object.keys(map);
+  }
+  // Filter out shared workspaces
+  return Object.keys(map)?.filter((depKey) => map[depKey] !== 'workspace:*');
+}
+
 /**
  * Return an array of the package.json dependencies that should be excluded from the build.
  */
@@ -67,6 +81,7 @@ export const findDependencies = (options: {
   peerDependencies: boolean;
   optionalDependencies: boolean;
   allowPredicate?: AllowPredicate | undefined;
+  allowWorkspaces: boolean;
 }): string[] => {
   const packageJsonKeys = [
     options.dependencies && 'dependencies',
@@ -88,7 +103,9 @@ export const findDependencies = (options: {
     }
 
     const packageNames = packageJsonKeys
-      .map((key) => (packageJson[key] ? Object.keys(packageJson[key]) : []))
+      .map((key) =>
+        getDependencyKeys(packageJson[key], options.allowWorkspaces)
+      )
       .flat(1);
     const { allowPredicate } = options;
     return allowPredicate
