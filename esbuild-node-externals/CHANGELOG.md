@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.11.0](https://www.github.com/pradel/esbuild-node-externals/compare/v1.10.0...v1.11.0) (2023-11-20)
+
+
+### Features
+
+* support same allowList options as webpack-node-externals ([#50](https://www.github.com/pradel/esbuild-node-externals/issues/50)) ([2dde999](https://www.github.com/pradel/esbuild-node-externals/commit/2dde999f71e317ff412d079290a63712ad2eb34e))
+
 ## [1.10.0](https://www.github.com/pradel/esbuild-node-externals/compare/v1.9.0...v1.10.0) (2023-11-20)
 
 
