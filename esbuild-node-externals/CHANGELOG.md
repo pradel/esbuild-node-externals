@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.10.0](https://www.github.com/pradel/esbuild-node-externals/compare/v1.9.0...v1.10.0) (2023-11-20)
+
+
+### Features
+
+* add flag to support workspaces dependencies ([#41](https://www.github.com/pradel/esbuild-node-externals/issues/41)) ([50b01b0](https://www.github.com/pradel/esbuild-node-externals/commit/50b01b0e106c3427b72b3366d47df6876b4ddcc5))
+
 ## [1.9.0](https://www.github.com/pradel/esbuild-node-externals/compare/v1.8.0...v1.9.0) (2023-08-30)
 
 
