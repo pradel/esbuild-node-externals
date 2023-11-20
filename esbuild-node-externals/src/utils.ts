@@ -2,6 +2,20 @@ import path from 'path';
 import fs from 'fs';
 import findUp from 'find-up';
 
+export type AllowPredicate = (path: string) => boolean;
+export type AllowList = (string | RegExp)[] | AllowPredicate;
+
+export const createAllowPredicate = (allowList: AllowList): AllowPredicate => {
+  return typeof allowList === 'function'
+    ? allowList
+    : (path: string) =>
+        Boolean(
+          allowList.find((pattern) =>
+            typeof pattern === 'string' ? path === pattern : pattern.test(path)
+          )
+        );
+};
+
 /**
  * Determines if the `child` path is under the `parent` path.
  */
@@ -43,7 +57,10 @@ export const findPackagePaths = (): string[] => {
   return packagePaths;
 };
 
-function getDependencyKeys(map: Record<string, string> = {}, allowWorkspaces: boolean = false): string[] {
+function getDependencyKeys(
+  map: Record<string, string> = {},
+  allowWorkspaces: boolean = false
+): string[] {
   if (!map) {
     return [];
   }
@@ -63,7 +80,7 @@ export const findDependencies = (options: {
   devDependencies: boolean;
   peerDependencies: boolean;
   optionalDependencies: boolean;
-  allowList: string[];
+  allowPredicate?: AllowPredicate | undefined;
   allowWorkspaces: boolean;
 }): string[] => {
   const packageJsonKeys = [
@@ -85,11 +102,15 @@ export const findDependencies = (options: {
       );
     }
 
-    return packageJsonKeys
-      // Automatically exclude keys for interconnected yarn workspaces.
-      .map((key) => getDependencyKeys(packageJson[key], options.allowWorkspaces))
-      .flat(1)
-      .filter((packageName) => !options.allowList.includes(packageName));
+    const packageNames = packageJsonKeys
+      .map((key) =>
+        getDependencyKeys(packageJson[key], options.allowWorkspaces)
+      )
+      .flat(1);
+    const { allowPredicate } = options;
+    return allowPredicate
+      ? packageNames.filter((packageName) => !allowPredicate(packageName))
+      : packageNames;
   });
 
   return data.flat(1);
