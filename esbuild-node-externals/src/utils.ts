@@ -34,15 +34,16 @@ const isInGitDirectory = (path: string, gitRootPath?: string): boolean => {
  * files outside of the git repository will not be yielded.
  * Inspired by https://github.com/Septh/rollup-plugin-node-externals/blob/f13ee95c6f1f01d8ba2276bf491aac399adc5482/src/dependencies.ts#L18
  */
-export const findPackagePaths = (): string[] => {
+export const findPackagePaths = (_cwd: string = process.cwd()): string[] => {
   // Find git root if in git repository
   const gitDirectoryPath = findUp.sync('.git', {
     type: 'directory',
+    cwd: _cwd,
   });
   const gitRootPath: string | undefined =
     gitDirectoryPath === undefined ? undefined : path.dirname(gitDirectoryPath);
 
-  let cwd: string = process.cwd();
+  let cwd: string = _cwd;
   let packagePath: string | undefined;
   const packagePaths: string[] = [];
 
