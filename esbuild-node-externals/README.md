@@ -86,6 +86,10 @@ An array for the externals to allow, so they will be included in the bundle. Can
 
 Automatically exclude all packages defined as workspaces (`workspace:*`) in a monorepo.
 
+#### `options.cwd` (default to `buildOptions.absWorkingDir || process.cwd()`)
+
+Sets the current working directory for the plugin.
+
 ## Inspiration
 
 This package and the implementation are inspired by the work of @liady on [webpack-node-externals](https://github.com/liady/webpack-node-externals) for webpack and @Septh on [rollup-plugin-node-externals](https://github.com/Septh/rollup-plugin-node-externals) for rollup.

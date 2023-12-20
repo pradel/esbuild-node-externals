@@ -15,7 +15,18 @@ export interface Options {
   optionalDependencies?: boolean;
   allowList?: AllowList;
   allowWorkspaces?: boolean;
+  cwd?: string;
 }
+
+const foundPackagePaths: Map<string, string[]> = new Map();
+const findPackagePathsMemoized = (cwd: string): string[] => {
+  if (foundPackagePaths.has(cwd)) {
+    return foundPackagePaths.get(cwd)!;
+  }
+
+  foundPackagePaths.set(cwd, findPackagePaths(cwd));
+  return findPackagePathsMemoized(cwd);
+};
 
 export const nodeExternalsPlugin = (paramsOptions: Options = {}): Plugin => {
   const options = {
@@ -34,21 +45,22 @@ export const nodeExternalsPlugin = (paramsOptions: Options = {}): Plugin => {
   const allowPredicate =
     options.allowList && createAllowPredicate(options.allowList);
 
-  const nodeModules = findDependencies({
-    packagePaths: options.packagePath
-      ? options.packagePath
-      : findPackagePaths(),
-    dependencies: options.dependencies,
-    devDependencies: options.devDependencies,
-    peerDependencies: options.peerDependencies,
-    optionalDependencies: options.optionalDependencies,
-    allowPredicate,
-    allowWorkspaces: options.allowWorkspaces,
-  });
 
   return {
     name: 'node-externals',
     setup(build) {
+      const cwd = options.cwd || build.initialOptions.absWorkingDir || process.cwd()
+      const nodeModules = findDependencies({
+        packagePaths: options.packagePath
+          ? options.packagePath
+          : findPackagePathsMemoized(cwd),
+        dependencies: options.dependencies,
+        devDependencies: options.devDependencies,
+        peerDependencies: options.peerDependencies,
+        optionalDependencies: options.optionalDependencies,
+        allowPredicate,
+        allowWorkspaces: options.allowWorkspaces,
+      });
       // On every module resolved, we check if the module name should be an external
       build.onResolve({ namespace: 'file', filter: /.*/ }, (args) => {
         // To allow allowList to target sub imports
