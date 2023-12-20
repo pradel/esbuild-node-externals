@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.11.1](https://www.github.com/pradel/esbuild-node-externals/compare/v1.11.0...v1.11.1) (2023-12-20)
+
+
+### Bug Fixes
+
+* enhance workspaced deps filter ([#53](https://www.github.com/pradel/esbuild-node-externals/issues/53)) ([83ed85a](https://www.github.com/pradel/esbuild-node-externals/commit/83ed85a9ba1a3670551bdb9bdba525d219a56065))
+
 ## [1.11.0](https://www.github.com/pradel/esbuild-node-externals/compare/v1.10.0...v1.11.0) (2023-11-20)
 
 
