@@ -68,7 +68,7 @@ function getDependencyKeys(
     return Object.keys(map);
   }
   // Filter out shared workspaces
-  return Object.keys(map)?.filter((depKey) => map[depKey] !== 'workspace:*');
+  return Object.keys(map).filter((depKey) => !map[depKey].startsWith('workspace:'));
 }
 
 /**
