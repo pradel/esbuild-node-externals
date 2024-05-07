@@ -1,6 +1,6 @@
 {
   "name": "esbuild-node-externals",
-  "version": "1.13.1",
+  "version": "1.13.2",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
