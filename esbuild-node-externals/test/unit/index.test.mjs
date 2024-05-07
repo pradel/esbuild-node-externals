@@ -19,12 +19,13 @@ describe('nodeExternalsPlugin', () => {
     }
     await build(config)
     const result1 = await fs.readFile(path.resolve(__dirname, '../temp/index.js'), 'utf8')
-    assert.ok(result1.includes('node_modules/tslib/tslib.es6.mjs'), true)
+    assert.equal(result1.includes('node_modules/tslib/tslib.es6.mjs'), true)
 
     await build({
       ...config,
       plugins: [plugin]
     })
-    assert.ok(result1.includes('node_modules/tslib/tslib.es6.mjs'), false)
+    const result2 = await fs.readFile(path.resolve(__dirname, '../temp/index.js'), 'utf8')
+    assert.equal(result2.includes('node_modules/tslib/tslib.es6.mjs'), false)
   })
 })
