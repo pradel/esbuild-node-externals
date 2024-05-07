@@ -7,7 +7,8 @@
     "typecheck": "tsc --noEmit",
     "prebuild": "rimraf ./dist",
     "build": "tsc",
-    "watch": "tsc --watch"
+    "watch": "tsc --watch",
+    "test": "node ./test/unit/index.test.mjs"
   },
   "repository": "https://github.com/pradel/esbuild-node-externals.git",
   "author": "Leo Pradel <pradel.leo@gmail.com>",
