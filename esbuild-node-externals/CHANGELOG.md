@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.13.2](https://www.github.com/pradel/esbuild-node-externals/compare/v1.13.1...v1.13.2) (2024-05-07)
+
+
+### Tests
+
+* fix unit test assert ([#60](https://www.github.com/pradel/esbuild-node-externals/issues/60)) ([0f3f818](https://www.github.com/pradel/esbuild-node-externals/commit/0f3f818537d26b4d58fc8ba5924c29debfd647ae))
+
 ### [1.13.1](https://www.github.com/pradel/esbuild-node-externals/compare/v1.13.0...v1.13.1) (2024-05-07)
 
 
