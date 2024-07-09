@@ -10,7 +10,7 @@
     "watch": "tsc --watch",
     "test": "node ./test/unit/index.test.mjs"
   },
-  "repository": "https://github.com/pradel/esbuild-node-externals.git",
+  "repository": "pradel/esbuild-node-externals",
   "author": "Leo Pradel <pradel.leo@gmail.com>",
   "license": "MIT",
   "keywords": [
@@ -31,11 +31,11 @@
     "tslib": "^2.4.1"
   },
   "peerDependencies": {
-    "esbuild": "0.12 - 0.21"
+    "esbuild": "0.12 - 0.23"
   },
   "devDependencies": {
     "@types/node": "^18.15.10",
-    "esbuild": "^0.21.0",
+    "esbuild": "^0.23.0",
     "rimraf": "^4.4.1",
     "typescript": "^4.9.4"
   }
