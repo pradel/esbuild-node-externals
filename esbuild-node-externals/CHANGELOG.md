@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.15.0](https://github.com/pradel/esbuild-node-externals/compare/v1.14.0...v1.15.0) (2024-09-26)
+
+
+### Features
+
+* add esbuild 0.24 to allowed range, extend integration test ([#65](https://github.com/pradel/esbuild-node-externals/issues/65)) ([9c86592](https://github.com/pradel/esbuild-node-externals/commit/9c865925874cb960163bda777ae030a13af962ff))
+
 ## [1.14.0](https://github.com/pradel/esbuild-node-externals/compare/v1.13.1...v1.14.0) (2024-07-09)
 
 
