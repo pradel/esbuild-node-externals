@@ -10,7 +10,7 @@ on:
     branches: [main]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     strategy:
@@ -46,5 +46,12 @@ jobs:
       - name: Test unit
         run: yarn workspace esbuild-node-externals test
 
-      - name: Test examples (integration)
-        run: yarn workspace example-basic build
+      - name: Test integration esbuild@0.12
+        run: |
+          yarn workspace example-basic add esbuild@0.12
+          yarn workspace example-basic build
+
+      - name: Test integration esbuild@0.24
+        run: |
+          yarn workspace example-basic add esbuild@0.24
+          yarn workspace example-basic build
