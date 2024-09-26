@@ -24,18 +24,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
-
-      - uses: actions/cache@v4
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+          cache: 'yarn'
 
       - name: Install dependencies
         run: yarn install --immutable
@@ -46,12 +35,10 @@ jobs:
       - name: Test unit
         run: yarn workspace esbuild-node-externals test
 
-      - name: Test integration esbuild@0.12
+      - name: Test integration esbuild@default
+        run: yarn workspace example-basic build
+
+      - name: Test integration esbuild@0.12 (minimal)
         run: |
           yarn workspace example-basic add esbuild@0.12
-          yarn workspace example-basic build
-
-      - name: Test integration esbuild@0.24
-        run: |
-          yarn workspace example-basic add esbuild@0.24
           yarn workspace example-basic build
