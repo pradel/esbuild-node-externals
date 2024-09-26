@@ -9,7 +9,7 @@ When bundling with Esbuild for the backend by default it will try to bundle all 
 
 ## Installation
 
-This plugin requires minimum **Node.js 18**, and **Esbuild 0.21+**.
+This plugin requires minimum **Node.js 12**, and **Esbuild 0.12+**.
 
 ```sh
 # with npm

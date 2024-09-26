@@ -24,7 +24,7 @@
     "src"
   ],
   "engines": {
-    "node": ">=18"
+    "node": ">=12"
   },
   "dependencies": {
     "find-up": "^5.0.0",
