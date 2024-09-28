@@ -503,7 +503,7 @@ __metadata:
     esbuild: ^0.24.0
     find-up: ^5.0.0
     rimraf: ^4.4.1
-    tslib: ^2.4.1
+    tslib: ^2.7.0
     typescript: ^4.9.4
   peerDependencies:
     esbuild: 0.12 - 0.24
@@ -1043,10 +1043,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.4.1":
-  version: 2.6.2
-  resolution: "tslib@npm:2.6.2"
-  checksum: 329ea56123005922f39642318e3d1f0f8265d1e7fcb92c633e0809521da75eeaca28d2cf96d7248229deb40e5c19adf408259f4b9640afd20d13aecc1430f3ad
+"tslib@npm:^2.7.0":
+  version: 2.7.0
+  resolution: "tslib@npm:2.7.0"
+  checksum: 1606d5c89f88d466889def78653f3aab0f88692e80bb2066d090ca6112ae250ec1cfa9dbfaab0d17b60da15a4186e8ec4d893801c67896b277c17374e36e1d28
   languageName: node
   linkType: hard
 

@@ -1,31 +1,59 @@
 import assert from 'node:assert'
 import fs from 'node:fs/promises'
 import path from 'node:path'
-import { describe, it } from 'node:test'
+import os from 'node:os'
 import { fileURLToPath } from 'node:url'
+import { createRequire } from 'node:module'
+import { describe, it } from 'node:test'
 import { build } from 'esbuild'
 import { nodeExternalsPlugin } from 'esbuild-node-externals'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
+const require = createRequire(import.meta.url)
+const tempdir = async (prefix = `t${Math.random().toString(36).slice(2)}`) => {
+  const dirpath = path.join(os.tmpdir(), prefix)
+  await fs.mkdir(dirpath, { recursive: true })
+
+  return dirpath
+}
 
 describe('nodeExternalsPlugin', () => {
   it('should exclude node_modules from bundle', async () => {
     const plugin = nodeExternalsPlugin()
+    const temp = await tempdir()
     const config = {
       absWorkingDir: path.resolve(__dirname, '../fixtures'),
       entryPoints: ['index.mjs'],
-      outdir: '../temp',
+      outdir: temp,
       bundle: true,
     }
     await build(config)
-    const result1 = await fs.readFile(path.resolve(__dirname, '../temp/index.js'), 'utf8')
-    assert.equal(result1.includes('node_modules/tslib/tslib.es6.mjs'), true)
+    const r1 = await fs.readFile(path.resolve(__dirname, `${temp}/index.js`), 'utf8')
+    assert.equal(r1.includes('node_modules/tslib/tslib'), true)
 
     await build({
       ...config,
       plugins: [plugin]
     })
-    const result2 = await fs.readFile(path.resolve(__dirname, '../temp/index.js'), 'utf8')
-    assert.equal(result2.includes('node_modules/tslib/tslib.es6.mjs'), false)
+    const r2 = await fs.readFile(path.resolve(__dirname, `${temp}/index.js`), 'utf8')
+    assert.equal(r2.includes('node_modules/tslib'), false)
+  })
+
+  it('works in commonjs mode too', async () => {
+    const { nodeExternalsPlugin: nodeExternalsPluginCjs } = require('esbuild-node-externals')
+    const plugin = nodeExternalsPluginCjs()
+    const temp = await tempdir()
+    const config = {
+      absWorkingDir: path.resolve(__dirname, '../fixtures'),
+      entryPoints: ['index.mjs'],
+      outdir: temp,
+      bundle: true,
+      plugins: [plugin]
+    }
+    await build(config)
+    const result = await fs.readFile(path.resolve(__dirname, `${temp}/index.js`), 'utf8')
+
+    assert.equal(result.includes('node_modules/tslib'), false)
+    assert.ok(nodeExternalsPlugin === nodeExternalsPluginCjs)
   })
 })
