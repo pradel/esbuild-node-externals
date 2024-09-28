@@ -7,7 +7,7 @@
     "typecheck": "tsc --noEmit",
     "prebuild": "rimraf ./dist",
     "build": "yarn build:js && yarn build:dts",
-    "build:js": "esbuild --platform=node --target=node18 --sourcemap --sources-content=false --outdir=dist --format=cjs src/*.ts",
+    "build:js": "esbuild --platform=node --target=node12 --sourcemap --sources-content=false --outdir=dist --format=cjs src/*.ts",
     "build:dts": "tsc --declaration --emitDeclarationOnly --outDir dist",
     "watch": "tsc --watch",
     "test": "node ./test/unit/index.test.mjs"
@@ -30,9 +30,6 @@
   ],
   "engines": {
     "node": ">=12"
-  },
-  "dependencies": {
-    "find-up": "^5.0.0"
   },
   "peerDependencies": {
     "esbuild": "0.12 - 0.24"
