@@ -45,11 +45,11 @@ export const nodeExternalsPlugin = (paramsOptions: Options = {}): Plugin => {
   const allowPredicate =
     options.allowList && createAllowPredicate(options.allowList);
 
-
   return {
     name: 'node-externals',
     setup(build) {
-      const cwd = options.cwd || build.initialOptions.absWorkingDir || process.cwd()
+      const cwd =
+        options.cwd || build.initialOptions.absWorkingDir || process.cwd();
       const nodeModules = findDependencies({
         packagePaths: options.packagePath
           ? options.packagePath

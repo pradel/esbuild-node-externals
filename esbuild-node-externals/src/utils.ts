@@ -1,6 +1,5 @@
 import path from 'path';
 import fs from 'fs';
-import findUp from 'find-up';
 
 export type AllowPredicate = (path: string) => boolean;
 export type AllowList = (string | RegExp)[] | AllowPredicate;
@@ -17,45 +16,28 @@ export const createAllowPredicate = (allowList: AllowList): AllowPredicate => {
 };
 
 /**
- * Determines if the `child` path is under the `parent` path.
- */
-const isInDirectory = (parent: string, child: string): boolean => {
-  const relativePath = path.relative(parent, child);
-  return !relativePath.startsWith('..') && !path.isAbsolute(relativePath);
-};
-
-const isInGitDirectory = (path: string, gitRootPath?: string): boolean => {
-  return gitRootPath === undefined || isInDirectory(gitRootPath, path);
-};
-
-/**
  * Iterates over package.json file paths recursively found in parent directories, starting from the
  * current working directory. If the current working directory is in a git repository, then package.json
- * files outside of the git repository will not be yielded.
+ * files outside the git repository will not be yielded.
  * Inspired by https://github.com/Septh/rollup-plugin-node-externals/blob/f13ee95c6f1f01d8ba2276bf491aac399adc5482/src/dependencies.ts#L18
  */
-export const findPackagePaths = (_cwd: string = process.cwd()): string[] => {
-  // Find git root if in git repository
-  const gitDirectoryPath = findUp.sync('.git', {
-    type: 'directory',
-    cwd: _cwd,
-  });
-  const gitRootPath: string | undefined =
-    gitDirectoryPath === undefined ? undefined : path.dirname(gitDirectoryPath);
+export const findPackagePaths = (cwd: string = process.cwd()): string[] => {
+  const chunks = path.resolve(cwd).split(path.sep);
+  const paths = [];
 
-  let cwd: string = _cwd;
-  let packagePath: string | undefined;
-  const packagePaths: string[] = [];
-
-  while (
-    (packagePath = findUp.sync('package.json', { type: 'file', cwd })) &&
-    isInGitDirectory(packagePath, gitRootPath)
-  ) {
-    packagePaths.push(packagePath);
-    cwd = path.dirname(path.dirname(packagePath));
+  for (let i = chunks.length; i > 0; i--) {
+    const dir = chunks.slice(0, i).join(path.sep);
+    const packagePath = path.join(dir, 'package.json');
+    const gitPath = path.join(dir, '.git');
+    if (fs.statSync(packagePath, { throwIfNoEntry: false })?.isFile()) {
+      paths.push(packagePath);
+    }
+    if (fs.statSync(gitPath, { throwIfNoEntry: false })?.isDirectory()) {
+      return paths;
+    }
   }
 
-  return packagePaths;
+  return paths;
 };
 
 function getDependencyKeys(
@@ -69,7 +51,9 @@ function getDependencyKeys(
     return Object.keys(map);
   }
   // Filter out shared workspaces
-  return Object.keys(map).filter((depKey) => !map[depKey].startsWith('workspace:'));
+  return Object.keys(map).filter(
+    (depKey) => !map[depKey].startsWith('workspace:')
+  );
 }
 
 /**
