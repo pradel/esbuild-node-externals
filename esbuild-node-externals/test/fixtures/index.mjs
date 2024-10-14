@@ -1,3 +1,3 @@
-import { __extends } from 'tslib'
+import { version } from 'typescript'
 
-console.log(__extends)
+console.log(version)

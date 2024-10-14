@@ -56,39 +56,17 @@ esbuild.build({
 });
 ```
 
-#### `options.packagePath`
+| Option                 | Description                                                                                                                                        | Default                          |
+|------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------|
+| `packagePath`          | Path to your `package.json`. Can be a string or an array of strings. If this option is not specified the default behavior is to start with the current directory's package.json then go up scan for all package.json files in parent directories recursively until either the root git directory is reached or until no other package.json can be found. | `undefined`                      |
+| `dependencies`         | Make package.json `dependencies` external.                                                                                                         | `true`                           |
+| `devDependencies`      | Make package.json `devDependencies` external.                                                                                                      | `true`                           |
+| `peerDependencies`     | Make package.json `peerDependencies` external.                                                                                                     | `true`                           |
+| `optionalDependencies` | Make package.json `optionalDependencies` external.                                                                                                 | `true`                           |
+| `allowList`            | An array for the externals to allow, so they will be included in the bundle.                                                                       | `[]`                             |
+| `allowWorkspaces`      | Automatically exclude all packages defined as workspaces (`workspace:*`) in a monorepo.                                                            | `false`                          |
+| `cwd`                  | Sets the current working directory for the plugin.                                                                                                 | `buildOptions.absWorkingDir \|\| process.cwd()` |
 
-Path to your `package.json`. Can be a string or an array of strings. If you are using a monorepo you can provide a list of all the `package.json` to check.
-
-If this option is not specified the default behavior is to start with the current directory's package.json then go up scan for all package.json files in parent directories recursively until either the root git directory is reached or until no other package.json can be found.
-
-#### `options.dependencies` (default to `true`)
-
-Make package.json `dependencies` external.
-
-#### `options.devDependencies` (default to `true`)
-
-Make package.json `devDependencies` external.
-
-#### `options.peerDependencies` (default to `true`)
-
-Make package.json `peerDependencies` external.
-
-#### `options.optionalDependencies` (default to `true`)
-
-Make package.json `optionalDependencies` external.
-
-#### `options.allowList` (default to `[]`)
-
-An array for the externals to allow, so they will be included in the bundle. Can accept exact strings ('module_name'), regex patterns (/^module_name/), or a function that accepts the module name and returns whether it should be included.
-
-#### `options.allowWorkspaces` (default to `false`)
-
-Automatically exclude all packages defined as workspaces (`workspace:*`) in a monorepo.
-
-#### `options.cwd` (default to `buildOptions.absWorkingDir || process.cwd()`)
-
-Sets the current working directory for the plugin.
 
 ## Inspiration
 

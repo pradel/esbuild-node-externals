@@ -10,11 +10,10 @@ const { nodeExternalsPlugin } = require('esbuild-node-externals');
       outfile: 'dist/index.js',
       plugins: [nodeExternalsPlugin()],
     });
-    console.log(`Built with ${esbuild.version}`)
+    console.log(`Built with ${esbuild.version}`);
     process.exit(0);
-  }
-  catch (e) {
+  } catch (e) {
     console.error(e);
     process.exit(1);
   }
-})()
+})();
