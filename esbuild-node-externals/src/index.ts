@@ -68,14 +68,12 @@ export const nodeExternalsPlugin = (paramsOptions: Options = {}): Plugin => {
           return null;
         }
 
-        // To allow sub imports from packages we take only the first path to deduct the name
-        let moduleName = args.path.split('/')[0];
-
-        // In case of scoped package
-        if (args.path.startsWith('@')) {
-          const split = args.path.split('/');
-          moduleName = `${split[0]}/${split[1]}`;
-        }
+        const chunks = args.path.split('/');
+        const moduleName = args.path.startsWith('@')
+          // In case of scoped package
+          ? chunks.slice(0, 2).join('/')
+          // To allow sub imports from packages we take only the first path to deduct the name
+          : chunks[0];
 
         // Mark the module as external so it is not resolved
         if (nodeModules.includes(moduleName)) {
