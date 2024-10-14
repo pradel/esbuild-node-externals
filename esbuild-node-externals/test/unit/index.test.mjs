@@ -27,6 +27,7 @@ describe('index', () => {
         entryPoints: ['index.mjs'],
         outdir: temp,
         bundle: true,
+        platform: 'node',
       }
       await build(config)
       const r1 = await fs.readFile(path.resolve(__dirname, `${temp}/index.js`), 'utf8')

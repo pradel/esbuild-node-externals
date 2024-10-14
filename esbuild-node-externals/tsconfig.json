@@ -2,7 +2,7 @@
   "compilerOptions": {
     "rootDir": "./src",
     "outDir": "./dist",
-    "importHelpers": true,
+    "importHelpers": false,
     "lib": ["es2019", "es2020.promise", "es2020.bigint", "es2020.string"],
     "removeComments": true,
     "target": "es2019",
@@ -21,7 +21,6 @@
     "allowUnreachableCode": false,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "importsNotUsedAsValues": "error",
     "noErrorTruncation": true,
     "exactOptionalPropertyTypes": true,
     "noImplicitOverride": false,

@@ -2,6 +2,6 @@
   "name": "fixture-pkg",
   "private": true,
   "dependencies": {
-    "tslib": "*"
+    "typescript": "*"
   }
 }
