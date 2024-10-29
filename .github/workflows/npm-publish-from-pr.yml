@@ -1,0 +1,71 @@
+name: npm publish from PR
+
+on:
+  workflow_dispatch:
+    inputs:
+      repo:
+        description: 'gh repo, like `scope/name`'
+      commit:
+        description: 'commit id'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.event.inputs.repo }}
+          ref: ${{ github.event.inputs.commit }}
+
+      - name: Install & Build
+        run: |
+          yarn install --immutable
+          yarn workspace esbuild-node-externals build
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: build-pr-${{ github.run_id }}
+          path: |
+            esbuild-node-externals/dist
+            package.json
+          retention-days: 1
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      checks: read
+      statuses: write
+      contents: write
+      packages: write
+      id-token: write
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/download-artifact@v4
+        with:
+          name: build-pr-${{ github.run_id }}
+
+      - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> esbuild-node-externals/.npmrc
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Notice
+        if: github.event.inputs.repo != github.repository
+        run: |
+          cd esbuild-node-externals
+          node -e "const fs = require('fs'); fs.writeFileSync('./README.md', process.env.NOTICE + fs.readFileSync('./README.md'))"
+        env:
+          NOTICE: "> ⚠<fe0f> **This snapshot was built from the external source**  \n> repo: ${{ github.event.inputs.repo }}  \n> commit: ${{ github.event.inputs.commit }}\n"
+
+      - run: |
+          cd esbuild-node-externals
+          npm version $(node --eval="process.stdout.write(require('./package.json').version)")-pr.${{ github.run_id }} --no-git-tag-version
+          npm publish --provenance --access=public --no-git-tag-version --tag pr
