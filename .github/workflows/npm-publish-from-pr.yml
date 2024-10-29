@@ -5,8 +5,10 @@ on:
     inputs:
       repo:
         description: 'gh repo, like `scope/name`'
+        required: true
       commit:
         description: 'commit id'
+        required: true
 
 jobs:
   build:
