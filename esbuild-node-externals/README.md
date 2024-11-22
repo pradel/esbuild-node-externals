@@ -82,6 +82,10 @@ Make package.json `optionalDependencies` external.
 
 An array for the externals to allow, so they will be included in the bundle. Can accept exact strings ('module_name'), regex patterns (/^module_name/), or a function that accepts the module name and returns whether it should be included.
 
+#### `options.forceExternalList` (default to `[]`)
+
+An array that forces packages to be treated as external, even if not in `package.json`, so they will be excluded from the bundle. Can accept exact strings ('module_name'), regex patterns (/^module_name/), or a function that accepts the module name and returns whether it should be externalized.
+
 #### `options.allowWorkspaces` (default to `false`)
 
 Automatically exclude all packages defined as workspaces (`workspace:*`) in a monorepo.
