@@ -14,6 +14,7 @@ export interface Options {
   peerDependencies?: boolean;
   optionalDependencies?: boolean;
   allowList?: AllowList;
+  forceExternalList?: AllowList;
   allowWorkspaces?: boolean;
   cwd?: string;
 }
@@ -44,7 +45,8 @@ export const nodeExternalsPlugin = (paramsOptions: Options = {}): Plugin => {
 
   const allowPredicate =
     options.allowList && createAllowPredicate(options.allowList);
-
+  const externalPredicate =
+    options.forceExternalList && createAllowPredicate(options.forceExternalList);
 
   return {
     name: 'node-externals',
@@ -79,6 +81,11 @@ export const nodeExternalsPlugin = (paramsOptions: Options = {}): Plugin => {
 
         // Mark the module as external so it is not resolved
         if (nodeModules.includes(moduleName)) {
+          return { path: args.path, external: true };
+        }
+
+        // Allow one last override to force a path/package to be treated as external
+        if (externalPredicate?.(args.path)) {
           return { path: args.path, external: true };
         }
 
