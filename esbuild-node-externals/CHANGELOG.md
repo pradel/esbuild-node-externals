@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.16.0](https://github.com/pradel/esbuild-node-externals/compare/v1.15.0...v1.16.0) (2024-12-17)
+
+
+### Features
+
+* add forceExternalList option ([555ca9b](https://github.com/pradel/esbuild-node-externals/commit/555ca9bebbe423884e8171bb3b69a7077cbf1219))
+
 ## [1.15.0](https://github.com/pradel/esbuild-node-externals/compare/v1.14.0...v1.15.0) (2024-09-26)
 
 
