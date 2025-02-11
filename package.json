@@ -1,5 +1,6 @@
 {
   "private": true,
+  "packageManager": "yarn@4.6.0",
   "workspaces": [
     "esbuild-node-externals",
     "examples/*"
@@ -12,6 +13,5 @@
   },
   "devDependencies": {
     "prettier": "3.5.0"
-  },
-  "packageManager": "yarn@4.6.0"
+  }
 }

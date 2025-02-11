@@ -501,7 +501,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esbuild-node-externals@workspace:esbuild-node-externals":
+"esbuild-node-externals@workspace:*, esbuild-node-externals@workspace:esbuild-node-externals":
   version: 0.0.0-use.local
   resolution: "esbuild-node-externals@workspace:esbuild-node-externals"
   dependencies:
@@ -695,7 +695,7 @@ __metadata:
   dependencies:
     "@accounts/rest-client": "npm:0.33.1"
     esbuild: "npm:^0.20.0"
-    esbuild-node-externals: "workspace:esbuild-node-externals"
+    esbuild-node-externals: "workspace:*"
     koa: "npm:2.15.3"
   languageName: unknown
   linkType: soft

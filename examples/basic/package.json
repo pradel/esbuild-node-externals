@@ -11,6 +11,6 @@
   },
   "devDependencies": {
     "esbuild": "^0.20.0",
-    "esbuild-node-externals": "workspace:esbuild-node-externals"
+    "esbuild-node-externals": "workspace:*"
   }
 }
