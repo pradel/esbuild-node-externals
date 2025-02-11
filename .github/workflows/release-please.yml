@@ -17,13 +17,14 @@ jobs:
           changelog-types: '[{"type":"feat","section":"Features","hidden":false},{"type":"fix","section":"Bug Fixes","hidden":false},{"type":"chore","section":"Miscellaneous","hidden":false},{"type":"docs","section":"Documentation","hidden":false},{"type":"test","section":"Tests","hidden":false}]'
           path: esbuild-node-externals
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         if: ${{ steps.release.outputs.release_created }}
 
-      - name: Use Node 20
-        uses: actions/setup-node@v1
+      - name: Use Node 22
+        uses: actions/setup-node@v4
         with:
-          node-version: 20.x
+          node-version: 22.x
+          cache: 'yarn'
         if: ${{ steps.release.outputs.release_created }}
 
       - name: Install dependencies

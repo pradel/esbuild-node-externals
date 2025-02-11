@@ -1,5 +1,5 @@
-import path from 'path';
-import fs from 'fs';
+import path from 'node:path';
+import fs from 'node:fs';
 import findUp from 'find-up';
 
 export type AllowPredicate = (path: string) => boolean;
@@ -11,8 +11,8 @@ export const createAllowPredicate = (allowList: AllowList): AllowPredicate => {
     : (path: string) =>
         Boolean(
           allowList.find((pattern) =>
-            typeof pattern === 'string' ? path === pattern : pattern.test(path)
-          )
+            typeof pattern === 'string' ? path === pattern : pattern.test(path),
+          ),
         );
 };
 
@@ -60,7 +60,7 @@ export const findPackagePaths = (_cwd: string = process.cwd()): string[] => {
 
 function getDependencyKeys(
   map: Record<string, string> = {},
-  allowWorkspaces: boolean = false
+  allowWorkspaces: boolean = false,
 ): string[] {
   if (!map) {
     return [];
@@ -69,7 +69,9 @@ function getDependencyKeys(
     return Object.keys(map);
   }
   // Filter out shared workspaces
-  return Object.keys(map).filter((depKey) => !map[depKey].startsWith('workspace:'));
+  return Object.keys(map).filter(
+    (depKey) => !map[depKey]?.startsWith('workspace:'),
+  );
 }
 
 /**
@@ -99,13 +101,13 @@ export const findDependencies = (options: {
     } catch (error) {
       console.error(error);
       throw new Error(
-        `Couldn't process ${packagePath}". Make sure it's a valid JSON.`
+        `Couldn't process ${packagePath}". Make sure it's a valid JSON.`,
       );
     }
 
     const packageNames = packageJsonKeys
       .map((key) =>
-        getDependencyKeys(packageJson[key], options.allowWorkspaces)
+        getDependencyKeys(packageJson[key], options.allowWorkspaces),
       )
       .flat(1);
     const { allowPredicate } = options;

@@ -3,7 +3,7 @@ import type { Plugin } from 'esbuild';
 import {
   findPackagePaths,
   findDependencies,
-  AllowList,
+  type AllowList,
   createAllowPredicate,
 } from './utils';
 
@@ -46,12 +46,14 @@ export const nodeExternalsPlugin = (paramsOptions: Options = {}): Plugin => {
   const allowPredicate =
     options.allowList && createAllowPredicate(options.allowList);
   const externalPredicate =
-    options.forceExternalList && createAllowPredicate(options.forceExternalList);
+    options.forceExternalList &&
+    createAllowPredicate(options.forceExternalList);
 
   return {
     name: 'node-externals',
     setup(build) {
-      const cwd = options.cwd || build.initialOptions.absWorkingDir || process.cwd()
+      const cwd =
+        options.cwd || build.initialOptions.absWorkingDir || process.cwd();
       const nodeModules = findDependencies({
         packagePaths: options.packagePath
           ? options.packagePath
@@ -80,7 +82,7 @@ export const nodeExternalsPlugin = (paramsOptions: Options = {}): Plugin => {
         }
 
         // Mark the module as external so it is not resolved
-        if (nodeModules.includes(moduleName)) {
+        if (moduleName && nodeModules.includes(moduleName)) {
           return { path: args.path, external: true };
         }
 
