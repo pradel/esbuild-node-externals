@@ -15,7 +15,6 @@
     "module": "NodeNext",
     "sourceMap": true,
     "declaration": true,
-    "noEmit": true,
     "lib": ["es2022"]
   },
   "include": ["src/**/*"],
