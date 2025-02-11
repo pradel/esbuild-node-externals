@@ -6,8 +6,8 @@
     "build": "node bundle.js"
   },
   "dependencies": {
-    "@accounts/rest-client": "0.30.0",
-    "koa": "2.13.4"
+    "@accounts/rest-client": "0.33.1",
+    "koa": "2.15.3"
   },
   "devDependencies": {
     "esbuild": "^0.20.0",

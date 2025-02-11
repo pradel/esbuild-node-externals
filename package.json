@@ -5,12 +5,13 @@
     "examples/*"
   ],
   "scripts": {
-    "prettier": "prettier --write '**/*.{js,ts,tsx,json,md,graphql,yml}'"
+    "format": "prettier --write '**/*.{js,ts,tsx,json,md,graphql,yml}'"
   },
   "prettier": {
     "singleQuote": true
   },
   "devDependencies": {
-    "prettier": "2.4.1"
-  }
+    "prettier": "3.5.0"
+  },
+  "packageManager": "yarn@4.6.0"
 }
