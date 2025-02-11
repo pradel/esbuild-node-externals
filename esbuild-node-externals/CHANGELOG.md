@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.18.0](https://github.com/pradel/esbuild-node-externals/compare/v1.17.0...v1.18.0) (2025-02-11)
+
+
+### Features
+
+* remove tslib from dependencies ([#75](https://github.com/pradel/esbuild-node-externals/issues/75)) ([fa5ce53](https://github.com/pradel/esbuild-node-externals/commit/fa5ce536723f00fcc34855a563f61bbb61d2c7df))
+* upgrade yarn and dependencies ([#73](https://github.com/pradel/esbuild-node-externals/issues/73)) ([0eebcc4](https://github.com/pradel/esbuild-node-externals/commit/0eebcc443d5e8fd788c13349bcfbe0ec35097b2b))
+
 ## [1.17.0](https://github.com/pradel/esbuild-node-externals/compare/v1.16.0...v1.17.0) (2025-02-11)
 
 
