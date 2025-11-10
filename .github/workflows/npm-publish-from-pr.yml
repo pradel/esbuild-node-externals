@@ -3,18 +3,52 @@ name: npm publish from PR
 on:
   workflow_dispatch:
     inputs:
-      repo:
-        description: 'gh repo, like `scope/name`'
-        default: ${{ github.repository }}
-        required: true
-      commit:
-        description: 'commit id'
-        required: true
+      link:
+        # https://github.com/pradel/esbuild-node-externals/pull/77/commits/c71529d76a625b56acb9a2eea864b1922f005766
+        description: 'github commit link'
+
+permissions:
+  contents: read
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      commit: ${{ steps.extract.outputs.commit }}
+      repo: ${{ steps.extract.outputs.repo }}
     steps:
+      - name: Extract repo and commit from link
+        id: extract
+        shell: bash
+        run: |
+          LINK="${{ github.event.inputs.link }}"
+
+          # Clean up URL and remove the domain prefix
+          LINK="${LINK%%\?*}"
+          LINK="${LINK%%#*}"
+          LINK="${LINK%/}"
+          LINK="${LINK#https://github.com/}"
+
+          # Extract repo (first two chunks)
+          REPO="${LINK%%/*/*/*/*}"   # -> org/repo
+          # Extract commit (last chunk)
+          SHA="${LINK##*/}"
+
+          if [[ ! "$REPO" =~ .+/.+ ]]; then
+            echo "❌ Invalid repo extracted: '$REPO' from '$LINK'"
+            exit 1
+          fi
+
+          if [[ ! "$SHA" =~ ^[0-9a-f]{5,40}$ ]]; then
+            echo "❌ Invalid commit SHA extracted: '$SHA' from '$LINK'"
+            exit 1
+          fi
+
+          echo "repo=$REPO" >> $GITHUB_OUTPUT
+          echo "commit=$SHA" >> $GITHUB_OUTPUT
+          echo "repo: $REPO"
+          echo "commit: $SHA"
+
       - name: Use Node.js 24
         uses: actions/setup-node@v5
         with:
@@ -23,8 +57,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
         with:
-          repository: ${{ github.event.inputs.repo }}
-          ref: ${{ github.event.inputs.commit }}
+          repository: ${{ steps.extract.outputs.repo }}
+          ref: ${{ steps.extract.outputs.commit }}
 
       - name: Install & Build
         run: |
@@ -62,15 +96,24 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Notice
-        if: github.event.inputs.repo != github.repository
+      - name: Add notice
         run: |
           cd esbuild-node-externals
-          node -e "const fs = require('fs'); fs.writeFileSync('./README.md', process.env.NOTICE + fs.readFileSync('./README.md'))"
+          node -e "const fs = require('fs'); fs.writeFileSync('./README.md', process.env.NOTICE + fs.readFileSync('./README.md', 'utf8'))"
         env:
-          NOTICE: "> ⚠<fe0f> **This snapshot was built from the external source**  \n> repo: ${{ github.event.inputs.repo }}  \n> commit: ${{ github.event.inputs.commit }}\n"
+          NOTICE: "> ⚠<fe0f> **This is a snapshot version from**  \n> ${{ github.event.inputs.link }}\n\n"
 
-      - run: |
+      - name: Publish snapshot
+        run: |
           cd esbuild-node-externals
-          npm version $(node --eval="process.stdout.write(require('./package.json').version)")-pr.${{ github.run_id }} --no-git-tag-version
+          BASE_VERSION=$(jq -r '.version' package.json)
+          SHORT_SHA="${{ needs.build.outputs.commit }}" 
+          SHORT_SHA=${SHORT_SHA:0:7}
+          PR_NUM=$(echo "${{ github.event.inputs.link }}")
+          PR_NUM="${PR_NUM#*pull/}"
+          PR_NUM="${PR_NUM%%/*}"
+          SNAPSHOT_VERSION="${BASE_VERSION}-pr.${PR_NUM}-${SHORT_SHA}"
+
+          echo "Using version: $SNAPSHOT_VERSION"
+          npm version "$SNAPSHOT_VERSION" --no-git-tag-version
           npm publish --provenance --access=public --no-git-tag-version --tag pr
