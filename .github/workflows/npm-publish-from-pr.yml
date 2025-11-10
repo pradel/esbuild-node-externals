@@ -5,6 +5,7 @@ on:
     inputs:
       repo:
         description: 'gh repo, like `scope/name`'
+        default: ${{ github.repository }}
         required: true
       commit:
         description: 'commit id'
@@ -14,13 +15,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Use Node.js 22
-        uses: actions/setup-node@v4
+      - name: Use Node.js 24
+        uses: actions/setup-node@v5
         with:
-          node-version: 22
+          node-version: 24
 
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: ${{ github.event.inputs.repo }}
           ref: ${{ github.event.inputs.commit }}
@@ -35,7 +36,9 @@ jobs:
           name: build-pr-${{ github.run_id }}
           path: |
             esbuild-node-externals/dist
+            esbuild-node-externals/src
             package.json
+            README.md
           retention-days: 1
 
   publish:
@@ -48,10 +51,10 @@ jobs:
       packages: write
       id-token: write
     steps:
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
-          node-version: 22
-      - uses: actions/download-artifact@v4
+          node-version: 24
+      - uses: actions/download-artifact@v5
         with:
           name: build-pr-${{ github.run_id }}
 
