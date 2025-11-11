@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
     inputs:
       link:
-        # https://github.com/pradel/esbuild-node-externals/pull/77/commits/c71529d76a625b56acb9a2eea864b1922f005766
-        description: 'github commit link'
+        description: 'github commit link (e.g. https://github.com/org/repo/pull/77/commits/<sha>)'
+        required: true
 
 permissions:
   contents: read
@@ -15,39 +15,48 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       commit: ${{ steps.extract.outputs.commit }}
+      shashort: ${{ steps.extract.outputs.shashort }}
       repo: ${{ steps.extract.outputs.repo }}
+      pr: ${{ steps.extract.outputs.pr }}
     steps:
-      - name: Extract repo and commit from link
+      - name: Extract repo, PR number, and commit (safe, regex-based)
         id: extract
-        shell: bash
+        env:
+          LINK: ${{ github.event.inputs.link }}
         run: |
-          LINK="${{ github.event.inputs.link }}"
+          node -e '
+            const fs = require("fs");
 
-          # Clean up URL and remove the domain prefix
-          LINK="${LINK%%\?*}"
-          LINK="${LINK%%#*}"
-          LINK="${LINK%/}"
-          LINK="${LINK#https://github.com/}"
+            const link = (process.env.LINK || "").trim();
+            if (!link) {
+              console.error("❌ Missing input link");
+              process.exit(1);
+            }
 
-          # Extract repo (first two chunks)
-          REPO="${LINK%%/*/*/*/*}"   # -> org/repo
-          # Extract commit (last chunk)
-          SHA="${LINK##*/}"
+            // Match patterns like:
+            // https://github.com/org/repo/pull/77/commits/c71529d76a625b56acb9a2eea864b1922f005766
+            const m = link.match(/^https:\/\/github\.com\/([^/]+\/[^/]+)\/pull\/(\d+)\/commits\/([0-9a-f]{5,40})(?:$|[?#])/);
 
-          if [[ ! "$REPO" =~ .+/.+ ]]; then
-            echo "❌ Invalid repo extracted: '$REPO' from '$LINK'"
-            exit 1
-          fi
+            if (!m) {
+              console.error("❌ Invalid GitHub commit link format:", link);
+              process.exit(1);
+            }
 
-          if [[ ! "$SHA" =~ ^[0-9a-f]{5,40}$ ]]; then
-            echo "❌ Invalid commit SHA extracted: '$SHA' from '$LINK'"
-            exit 1
-          fi
+            const repo = m[1];
+            const pr = m[2];
+            const commit = m[3];
+            const shashort = commit.slice(0, 7);
 
-          echo "repo=$REPO" >> $GITHUB_OUTPUT
-          echo "commit=$SHA" >> $GITHUB_OUTPUT
-          echo "repo: $REPO"
-          echo "commit: $SHA"
+            console.log("✅ Extracted:");
+            console.log("  repo:", repo);
+            console.log("  pr:", pr);
+            console.log("  commit:", commit);
+            console.log("  shashort:", shashort);
+
+            fs.appendFileSync(process.env.GITHUB_OUTPUT,
+              `repo=${repo}\npr=${pr}\ncommit=${commit}\nshashort=${shashort}\n`
+            );
+          '
 
       - name: Use Node.js 24
         uses: actions/setup-node@v5
@@ -101,18 +110,15 @@ jobs:
           cd esbuild-node-externals
           node -e "const fs = require('fs'); fs.writeFileSync('./README.md', process.env.NOTICE + fs.readFileSync('./README.md', 'utf8'))"
         env:
-          NOTICE: "> ⚠<fe0f> **This is a snapshot version from**  \n> ${{ github.event.inputs.link }}\n\n"
+          NOTICE: "> ⚠️ **This is a snapshot version from**  \n> ${{ github.event.inputs.link }}\n\n"
 
       - name: Publish snapshot
         run: |
           cd esbuild-node-externals
-          BASE_VERSION=$(jq -r '.version' package.json)
-          SHORT_SHA="${{ needs.build.outputs.commit }}" 
-          SHORT_SHA=${SHORT_SHA:0:7}
-          PR_NUM=$(echo "${{ github.event.inputs.link }}")
-          PR_NUM="${PR_NUM#*pull/}"
-          PR_NUM="${PR_NUM%%/*}"
-          SNAPSHOT_VERSION="${BASE_VERSION}-pr.${PR_NUM}-${SHORT_SHA}"
+          VERSION=$(jq -r '.version' package.json)
+          SHA="${{ needs.build.outputs.shashort }}" 
+          PR="${{ needs.build.outputs.pr }}" 
+          SNAPSHOT_VERSION="${VERSION}-pr.${PR}-${SHA}"
 
           echo "Using version: $SNAPSHOT_VERSION"
           npm version "$SNAPSHOT_VERSION" --no-git-tag-version
