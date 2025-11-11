@@ -99,7 +99,7 @@ jobs:
         with:
           name: build-pr-${{ github.run_id }}
 
-      - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> esbuild-node-externals/.npmrc
+      - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
