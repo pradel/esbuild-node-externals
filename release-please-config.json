@@ -1,0 +1,7 @@
+{
+  "packages": {
+    "esbuild-node-externals": {
+      "release-type": "node"
+    }
+  }
+}
