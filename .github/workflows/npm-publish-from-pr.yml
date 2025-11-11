@@ -19,7 +19,7 @@ jobs:
       repo: ${{ steps.extract.outputs.repo }}
       pr: ${{ steps.extract.outputs.pr }}
     steps:
-      - name: Extract repo, PR number, and commit (safe, regex-based)
+      - name: Extract repo, PR number, and commit
         id: extract
         env:
           LINK: ${{ github.event.inputs.link }}
@@ -68,6 +68,7 @@ jobs:
         with:
           repository: ${{ steps.extract.outputs.repo }}
           ref: ${{ steps.extract.outputs.commit }}
+          persist-credentials: false
 
       - name: Install & Build
         run: |
@@ -78,10 +79,7 @@ jobs:
         with:
           name: build-pr-${{ github.run_id }}
           path: |
-            esbuild-node-externals/dist
-            esbuild-node-externals/src
-            package.json
-            README.md
+            esbuild-node-externals
           retention-days: 1
 
   publish:
@@ -107,14 +105,12 @@ jobs:
 
       - name: Add notice
         run: |
-          cd esbuild-node-externals
           node -e "const fs = require('fs'); fs.writeFileSync('./README.md', process.env.NOTICE + fs.readFileSync('./README.md', 'utf8'))"
         env:
           NOTICE: "> ⚠️ **This is a snapshot version from**  \n> ${{ github.event.inputs.link }}\n\n"
 
       - name: Publish snapshot
         run: |
-          cd esbuild-node-externals
           VERSION=$(jq -r '.version' package.json)
           SHA="${{ needs.build.outputs.shashort }}" 
           PR="${{ needs.build.outputs.pr }}" 
