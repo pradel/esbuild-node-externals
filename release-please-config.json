@@ -1,4 +1,5 @@
 {
+  "bootstrap-sha": "3fd589c1c1b0410ff5739b93ab8ebcdd3259717a",
   "packages": {
     "esbuild-node-externals": {
       "release-type": "node"
