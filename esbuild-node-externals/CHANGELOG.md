@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.19.1](https://github.com/pradel/esbuild-node-externals/compare/esbuild-node-externals-v1.19.0...esbuild-node-externals-v1.19.1) (2025-11-11)
+
+
+### Bug Fixes
+
+* fix ci release-please config ([#79](https://github.com/pradel/esbuild-node-externals/issues/79)) ([8270e78](https://github.com/pradel/esbuild-node-externals/commit/8270e781b967c2a937087b4b37fd137f96000ab5))
+
 ## [1.19.0](https://github.com/pradel/esbuild-node-externals/compare/v1.18.0...v1.19.0) (2025-11-11)
 
 
