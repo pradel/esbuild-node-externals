@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.20.1](https://github.com/pradel/esbuild-node-externals/compare/esbuild-node-externals-v1.20.0...esbuild-node-externals-v1.20.1) (2025-11-15)
+
+
+### Bug Fixes
+
+* fix npm publishing ([b6b2e0f](https://github.com/pradel/esbuild-node-externals/commit/b6b2e0f9d9b405df50dcdc775c292eab84b5e781))
+
 ## [1.20.0](https://github.com/pradel/esbuild-node-externals/compare/esbuild-node-externals-v1.19.1...esbuild-node-externals-v1.20.0) (2025-11-15)
 
 
