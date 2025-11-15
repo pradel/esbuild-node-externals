@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.20.0](https://github.com/pradel/esbuild-node-externals/compare/esbuild-node-externals-v1.19.1...esbuild-node-externals-v1.20.0) (2025-11-15)
+
+
+### Features
+
+* ci setup trusted publishing for npm ([ebd7799](https://github.com/pradel/esbuild-node-externals/commit/ebd77993abd0fb88fdde226240dbd9b8ad1b0240))
+
 ## [1.19.1](https://github.com/pradel/esbuild-node-externals/compare/esbuild-node-externals-v1.19.0...esbuild-node-externals-v1.19.1) (2025-11-11)
 
 
