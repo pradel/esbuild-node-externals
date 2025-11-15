@@ -3,41 +3,45 @@ on:
     branches:
       - main
 
-permissions:
-  contents: write
-  issues: write
-  pull-requests: write
-
 name: release-please
 jobs:
   release-please:
+    name: Release
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write # Required for OIDC
+      pull-requests: write
+      issues: write
     steps:
-      - uses: googleapis/release-please-action@v4
+      - name: Release Please
+        uses: googleapis/release-please-action@v4
         id: release
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: actions/checkout@v5
-        if: ${{ steps.release.outputs.releases_created }}
+      - name: Checkout code
+        uses: actions/checkout@v5
+        if: ${{ fromJSON(steps.release.outputs.releases_created) }}
 
       - name: Use Node 22
         uses: actions/setup-node@v5
         with:
           node-version: 22.x
           cache: 'yarn'
-        if: ${{ steps.release.outputs.releases_created == 'true' }}
+        if: ${{ fromJSON(steps.release.outputs.releases_created) }}
 
       - name: Install dependencies
         run: yarn install --immutable
-        if: ${{ steps.release.outputs.releases_created == 'true' }}
+        if: ${{ fromJSON(steps.release.outputs.releases_created) }}
 
       - name: Build esbuild-node-externals
         run: yarn workspace esbuild-node-externals build
-        if: ${{ steps.release.outputs.releases_created == 'true' }}
+        if: ${{ fromJSON(steps.release.outputs.releases_created) }}
 
       - name: Publish esbuild-node-externals npm package
         run: yarn workspace esbuild-node-externals npm publish
         env:
-          NPM_TOKEN: ${{secrets.NPM_TOKEN}}
-        if: ${{ steps.release.outputs.releases_created == 'true' }}
+          # Use OIDC for npm authentication instead of NPM_TOKEN
+          NPM_TOKEN: '' # https://github.com/changesets/changesets/issues/1152#issuecomment-3190884868
+        if: ${{ fromJSON(steps.release.outputs.releases_created) }}

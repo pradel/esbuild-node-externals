@@ -3,6 +3,10 @@
   "version": "1.19.1",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "scripts": {
     "typecheck": "tsc --noEmit",
     "prebuild": "rimraf ./dist",
@@ -11,7 +15,7 @@
     "test": "node ./test/unit/index.test.mjs"
   },
   "repository": "pradel/esbuild-node-externals",
-  "author": "Leo Pradel <pradel.leo@gmail.com>",
+  "author": "Leo Pradel",
   "license": "MIT",
   "keywords": [
     "esbuild",
