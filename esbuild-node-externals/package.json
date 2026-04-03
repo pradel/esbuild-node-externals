@@ -34,11 +34,11 @@
     "find-up": "^5.0.0"
   },
   "peerDependencies": {
-    "esbuild": "0.12 - 0.27"
+    "esbuild": "0.12 - 0.28"
   },
   "devDependencies": {
     "@types/node": "^24.10.1",
-    "esbuild": "^0.27.0",
+    "esbuild": "^0.28.0",
     "rimraf": "^6.1.0",
     "tslib": "^2.8.1",
     "typescript": "^5.9.3"
