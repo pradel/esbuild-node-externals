@@ -1,6 +1,6 @@
 import path from 'node:path';
 import fs from 'node:fs';
-import findUp from 'find-up';
+import * as find from 'empathic/find';
 
 export type AllowPredicate = (path: string) => boolean;
 export type AllowList = (string | RegExp)[] | AllowPredicate;
@@ -36,8 +36,7 @@ const isInGitDirectory = (path: string, gitRootPath?: string): boolean => {
  */
 export const findPackagePaths = (_cwd: string = process.cwd()): string[] => {
   // Find git root if in git repository
-  const gitDirectoryPath = findUp.sync('.git', {
-    type: 'directory',
+  const gitDirectoryPath = find.up('.git', {
     cwd: _cwd,
   });
   const gitRootPath: string | undefined =
@@ -48,7 +47,7 @@ export const findPackagePaths = (_cwd: string = process.cwd()): string[] => {
   const packagePaths: string[] = [];
 
   while (
-    (packagePath = findUp.sync('package.json', { type: 'file', cwd })) &&
+    (packagePath = find.up('package.json', { cwd })) &&
     isInGitDirectory(packagePath, gitRootPath)
   ) {
     packagePaths.push(packagePath);
