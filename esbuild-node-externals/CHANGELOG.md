@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.22.0](https://github.com/pradel/esbuild-node-externals/compare/esbuild-node-externals-v1.21.0...esbuild-node-externals-v1.22.0) (2026-04-08)
+
+
+### Features
+
+* replace find-up with empathic to have smaller installation ([#86](https://github.com/pradel/esbuild-node-externals/issues/86)) ([87229fc](https://github.com/pradel/esbuild-node-externals/commit/87229fc8268ebaed346172ba4534777d133e6f14))
+
 ## [1.21.0](https://github.com/pradel/esbuild-node-externals/compare/esbuild-node-externals-v1.20.1...esbuild-node-externals-v1.21.0) (2026-04-03)
 
 
