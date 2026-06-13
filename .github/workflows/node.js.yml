@@ -36,9 +36,9 @@ jobs:
         run: vp run -r test
 
       - name: Test integration esbuild@default
-        run: pnpm --filter example-basic build
+        run: vp run -F example-basic build
 
       - name: Test integration esbuild@0.12 (minimal)
         run: |
-          pnpm --filter example-basic add esbuild@0.12
-          pnpm --filter example-basic build
+          vp install --filter example-basic esbuild@0.12
+          vp run -F example-basic build
