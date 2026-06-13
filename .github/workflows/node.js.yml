@@ -32,6 +32,9 @@ jobs:
       - name: Build
         run: vp run -r build
 
+      - name: Check formatting, linting and type checks.
+        run: vp check
+
       - name: Test unit
         run: vp run -r test
 
