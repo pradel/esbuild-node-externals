@@ -18,27 +18,22 @@ jobs:
         node-version: [22, 24]
 
     steps:
-      - uses: actions/checkout@v6
+      - name: Checkout code
+        uses: actions/checkout@v6
         with:
           persist-credentials: false
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v6
-
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v6
+      - name: vite-plus setup
+        uses: voidzero-dev/setup-vp@v1
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+          cache: true
 
       - name: Build
-        run: pnpm --filter esbuild-node-externals build
+        run: vp run -r build
 
       - name: Test unit
-        run: pnpm --filter esbuild-node-externals test
+        run: vp run -r test
 
       - name: Test integration esbuild@default
         run: pnpm --filter example-basic build
