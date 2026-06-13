@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite-plus'
+import { defineConfig } from 'vite-plus';
 
 export default defineConfig({
   staged: {
@@ -8,7 +8,6 @@ export default defineConfig({
     sortImports: true,
     printWidth: 80,
     singleQuote: true,
-    semi: false,
     ignorePatterns: ['**/dist/**', 'esbuild-node-externals/CHANGELOG.md'],
   },
   lint: {
@@ -18,4 +17,4 @@ export default defineConfig({
   run: {
     cache: true,
   },
-})
+});

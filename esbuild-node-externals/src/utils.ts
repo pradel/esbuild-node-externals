@@ -1,10 +1,10 @@
-import fs from 'node:fs'
-import path from 'node:path'
+import fs from 'node:fs';
+import path from 'node:path';
 
-import * as find from 'empathic/find'
+import * as find from 'empathic/find';
 
-export type AllowPredicate = (path: string) => boolean
-export type AllowList = (string | RegExp)[] | AllowPredicate
+export type AllowPredicate = (path: string) => boolean;
+export type AllowList = (string | RegExp)[] | AllowPredicate;
 
 export const createAllowPredicate = (allowList: AllowList): AllowPredicate => {
   return typeof allowList === 'function'
@@ -14,20 +14,20 @@ export const createAllowPredicate = (allowList: AllowList): AllowPredicate => {
           allowList.find((pattern) =>
             typeof pattern === 'string' ? path === pattern : pattern.test(path),
           ),
-        )
-}
+        );
+};
 
 /**
  * Determines if the `child` path is under the `parent` path.
  */
 const isInDirectory = (parent: string, child: string): boolean => {
-  const relativePath = path.relative(parent, child)
-  return !relativePath.startsWith('..') && !path.isAbsolute(relativePath)
-}
+  const relativePath = path.relative(parent, child);
+  return !relativePath.startsWith('..') && !path.isAbsolute(relativePath);
+};
 
 const isInGitDirectory = (path: string, gitRootPath?: string): boolean => {
-  return gitRootPath === undefined || isInDirectory(gitRootPath, path)
-}
+  return gitRootPath === undefined || isInDirectory(gitRootPath, path);
+};
 
 /**
  * Iterates over package.json file paths recursively found in parent directories, starting from the
@@ -39,82 +39,82 @@ export const findPackagePaths = (_cwd: string = process.cwd()): string[] => {
   // Find git root if in git repository
   const gitDirectoryPath = find.up('.git', {
     cwd: _cwd,
-  })
+  });
   const gitRootPath: string | undefined =
-    gitDirectoryPath === undefined ? undefined : path.dirname(gitDirectoryPath)
+    gitDirectoryPath === undefined ? undefined : path.dirname(gitDirectoryPath);
 
-  let cwd: string = _cwd
-  let packagePath: string | undefined
-  const packagePaths: string[] = []
+  let cwd: string = _cwd;
+  let packagePath: string | undefined;
+  const packagePaths: string[] = [];
 
   while (
     (packagePath = find.up('package.json', { cwd })) &&
     isInGitDirectory(packagePath, gitRootPath)
   ) {
-    packagePaths.push(packagePath)
-    cwd = path.dirname(path.dirname(packagePath))
+    packagePaths.push(packagePath);
+    cwd = path.dirname(path.dirname(packagePath));
   }
 
-  return packagePaths
-}
+  return packagePaths;
+};
 
 function getDependencyKeys(
   map: Record<string, string> = {},
   allowWorkspaces: boolean = false,
 ): string[] {
   if (!map) {
-    return []
+    return [];
   }
   if (!allowWorkspaces) {
-    return Object.keys(map)
+    return Object.keys(map);
   }
   // Filter out shared workspaces
   return Object.keys(map).filter(
     (depKey) => !map[depKey]?.startsWith('workspace:'),
-  )
+  );
 }
 
 /**
  * Return an array of the package.json dependencies that should be excluded from the build.
  */
 export const findDependencies = (options: {
-  packagePaths: string[]
-  dependencies: boolean
-  devDependencies: boolean
-  peerDependencies: boolean
-  optionalDependencies: boolean
-  allowPredicate?: AllowPredicate | undefined
-  allowWorkspaces: boolean
+  packagePaths: string[];
+  dependencies: boolean;
+  devDependencies: boolean;
+  peerDependencies: boolean;
+  optionalDependencies: boolean;
+  allowPredicate?: AllowPredicate | undefined;
+  allowWorkspaces: boolean;
 }): string[] => {
   const packageJsonKeys = [
     options.dependencies && 'dependencies',
     options.devDependencies && 'devDependencies',
     options.peerDependencies && 'peerDependencies',
     options.optionalDependencies && 'optionalDependencies',
-  ].filter(Boolean) as string[]
+  ].filter(Boolean) as string[];
 
   const data = options.packagePaths.map((packagePath) => {
-    let packageJson: any
+    let packageJson: any;
     try {
-      const packageJsonString = fs.readFileSync(packagePath, 'utf8')
-      packageJson = JSON.parse(packageJsonString)
+      const packageJsonString = fs.readFileSync(packagePath, 'utf8');
+      packageJson = JSON.parse(packageJsonString);
     } catch (error) {
-      console.error(error)
+      console.error(error);
       throw new Error(
         `Couldn't process ${packagePath}". Make sure it's a valid JSON.`,
-      )
+      );
     }
 
     const packageNames = packageJsonKeys
       .map((key) =>
         getDependencyKeys(packageJson[key], options.allowWorkspaces),
       )
-      .flat(1)
-    const { allowPredicate } = options
+      .flat(1);
+    const { allowPredicate } = options;
     return allowPredicate
       ? packageNames.filter((packageName) => !allowPredicate(packageName))
-      : packageNames
-  })
+      : packageNames;
+  });
 
-  return data.flat(1)
-}
+  return data.flat(1);
+};

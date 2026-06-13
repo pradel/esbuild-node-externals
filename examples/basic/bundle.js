@@ -1,5 +1,5 @@
-const esbuild = require('esbuild')
-const { nodeExternalsPlugin } = require('esbuild-node-externals')
+const esbuild = require('esbuild');
+const { nodeExternalsPlugin } = require('esbuild-node-externals');
 
 void (async () => {
   try {
@@ -9,11 +9,11 @@ void (async () => {
       platform: 'node',
       outfile: 'dist/index.js',
       plugins: [nodeExternalsPlugin()],
-    })
-    console.log(`Built with ${esbuild.version}`)
-    process.exit(0)
+    });
+    console.log(`Built with ${esbuild.version}`);
+    process.exit(0);
   } catch (e) {
-    console.error(e)
-    process.exit(1)
+    console.error(e);
+    process.exit(1);
   }
-})()
+})();

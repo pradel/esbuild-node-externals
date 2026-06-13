@@ -25,8 +25,8 @@ When you call the esbuild build API, add the esbuild-node-externals plugin.
 
 ```js
 // Your bundler file
-const esbuild = require('esbuild')
-const { nodeExternalsPlugin } = require('esbuild-node-externals')
+const esbuild = require('esbuild');
+const { nodeExternalsPlugin } = require('esbuild-node-externals');
 
 esbuild.build({
   entryPoints: ['src/index.js'],
@@ -34,7 +34,7 @@ esbuild.build({
   platform: 'node',
   outfile: 'dist/index.js',
   plugins: [nodeExternalsPlugin()],
-})
+});
 ```
 
 ## Options
@@ -43,8 +43,8 @@ When calling this package, you can pass an `options` object.
 
 ```js
 // Your bundler file
-const esbuild = require('esbuild')
-const { nodeExternalsPlugin } = require('esbuild-node-externals')
+const esbuild = require('esbuild');
+const { nodeExternalsPlugin } = require('esbuild-node-externals');
 
 esbuild.build({
   // ...
@@ -53,7 +53,7 @@ esbuild.build({
       packagePath: 'path/to/package.json',
     }),
   ],
-})
+});
 ```
 
 #### `options.packagePath`
