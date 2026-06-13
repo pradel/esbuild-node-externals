@@ -9,6 +9,8 @@ export default defineConfig({
     sourcemap: true,
     dts: true,
     clean: true,
+    attw: true,
+    publint: true,
   },
   test: {
     environment: 'node',
