@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.23.0](https://github.com/pradel/esbuild-node-externals/compare/esbuild-node-externals-v1.22.0...esbuild-node-externals-v1.23.0) (2026-06-13)
+
+
+### Features
+
+* new release with new repo tooling (esm, cjs) ([49d3abe](https://github.com/pradel/esbuild-node-externals/commit/49d3abecee29d6fbafaba24d7189f89175d91f82))
+
 ## [1.22.0](https://github.com/pradel/esbuild-node-externals/compare/esbuild-node-externals-v1.21.0...esbuild-node-externals-v1.22.0) (2026-04-08)
 
 
