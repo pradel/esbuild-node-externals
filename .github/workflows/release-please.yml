@@ -25,7 +25,7 @@ jobs:
         if: ${{ fromJSON(steps.release.outputs.releases_created) }}
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
         if: ${{ fromJSON(steps.release.outputs.releases_created) }}
 
       - name: Use Node 24
