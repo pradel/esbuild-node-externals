@@ -17,6 +17,9 @@ npm install --save-dev esbuild-node-externals
 
 # with pnpm
 pnpm add -D esbuild-node-externals
+
+# with yarn
+yarn add -D esbuild-node-externals
 ```
 
 ## Usage
