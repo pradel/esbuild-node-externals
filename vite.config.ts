@@ -7,6 +7,7 @@ export default defineConfig({
   fmt: {
     sortImports: true,
     printWidth: 80,
+    ignorePatterns: ["**/dist/**", "esbuild-node-externals/CHANGELOG.md"],
   },
   lint: {
     options: { typeAware: true, typeCheck: true },
