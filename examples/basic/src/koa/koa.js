@@ -1,1 +1,1 @@
-export const koa = 'koa';
+export const koa = 'koa'
