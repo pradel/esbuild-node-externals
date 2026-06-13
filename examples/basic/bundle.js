@@ -1,7 +1,7 @@
 const esbuild = require('esbuild');
 const { nodeExternalsPlugin } = require('esbuild-node-externals');
 
-(async () => {
+void (async () => {
   try {
     await esbuild.build({
       entryPoints: ['src/index.js'],

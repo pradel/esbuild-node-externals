@@ -1,17 +1,15 @@
 {
   "private": true,
-  "packageManager": "yarn@4.13.0",
-  "workspaces": [
-    "esbuild-node-externals",
-    "examples/*"
-  ],
   "scripts": {
-    "format": "prettier --write '**/*.{js,ts,tsx,json,md,graphql,yml}'"
-  },
-  "prettier": {
-    "singleQuote": true
+    "ready": "vp fmt && vp run -r build && vp lint && vp run -r test",
+    "build": "vp run -r build",
+    "test": "vp run -r test",
+    "prepare": "vp config",
+    "format": "vp fmt"
   },
   "devDependencies": {
-    "prettier": "3.8.1"
-  }
+    "@types/node": "^24.12.2",
+    "vite-plus": "0.1.24"
+  },
+  "packageManager": "pnpm@11.6.0"
 }

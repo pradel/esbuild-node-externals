@@ -1,5 +1,6 @@
-import path from 'node:path';
 import fs from 'node:fs';
+import path from 'node:path';
+
 import * as find from 'empathic/find';
 
 export type AllowPredicate = (path: string) => boolean;

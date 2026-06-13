@@ -1,3 +1,3 @@
-import { __extends } from 'tslib'
+import { __extends } from 'tslib';
 
-console.log(__extends)
+console.log(__extends);

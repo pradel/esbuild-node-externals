@@ -16,31 +16,49 @@ jobs:
     strategy:
       matrix:
         node-version: [22, 24]
+        esbuild-version:
+          [
+            '0.12',
+            '0.13',
+            '0.14',
+            '0.15',
+            '0.16',
+            '0.17',
+            '0.18',
+            '0.19',
+            '0.20',
+            '0.21',
+            '0.22',
+            '0.23',
+            '0.24',
+            '0.25',
+            '0.26',
+            '0.27',
+            '0.28',
+          ]
 
     steps:
-      - uses: actions/checkout@v5
+      - name: Checkout code
+        uses: actions/checkout@v6
         with:
           persist-credentials: false
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v5
+      - name: vite-plus setup
+        uses: voidzero-dev/setup-vp@v1
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'yarn'
-
-      - name: Install dependencies
-        run: yarn install --immutable
+          cache: true
 
       - name: Build
-        run: yarn workspace esbuild-node-externals build
+        run: vp run -r build
+
+      - name: Check formatting, linting and type checks.
+        run: vp check
 
       - name: Test unit
-        run: yarn workspace esbuild-node-externals test
+        run: vp run -r test
 
-      - name: Test integration esbuild@default
-        run: yarn workspace example-basic build
-
-      - name: Test integration esbuild@0.12 (minimal)
+      - name: Test integration esbuild@${{ matrix.esbuild-version }}
         run: |
-          yarn workspace example-basic add esbuild@0.12
-          yarn workspace example-basic build
+          vp install --filter example-basic esbuild@${{ matrix.esbuild-version }}
+          vp run -F example-basic build
