@@ -39,8 +39,12 @@ jobs:
         run: pnpm install --frozen-lockfile
         if: ${{ fromJSON(steps.release.outputs.releases_created) }}
 
+      - name: Install vite-plus globally
+        run: npm install -g vite-plus
+        if: ${{ fromJSON(steps.release.outputs.releases_created) }}
+
       - name: Build esbuild-node-externals
-        run: npx vp run -F esbuild-node-externals build
+        run: vp run -F esbuild-node-externals build
         if: ${{ fromJSON(steps.release.outputs.releases_created) }}
 
       - name: Publish esbuild-node-externals npm package
