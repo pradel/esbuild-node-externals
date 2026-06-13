@@ -4,7 +4,7 @@ import path from 'node:path'
 import { describe, it } from 'node:test'
 import { fileURLToPath } from 'node:url'
 import { build } from 'esbuild'
-import { nodeExternalsPlugin } from 'esbuild-node-externals'
+import { nodeExternalsPlugin } from '../../dist/index.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
