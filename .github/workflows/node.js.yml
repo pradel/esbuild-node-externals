@@ -22,25 +22,28 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v5
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'yarn'
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: yarn install --immutable
+        run: pnpm install --frozen-lockfile
 
       - name: Build
-        run: yarn workspace esbuild-node-externals build
+        run: pnpm --filter esbuild-node-externals build
 
       - name: Test unit
-        run: yarn workspace esbuild-node-externals test
+        run: pnpm --filter esbuild-node-externals test
 
       - name: Test integration esbuild@default
-        run: yarn workspace example-basic build
+        run: pnpm --filter example-basic build
 
       - name: Test integration esbuild@0.12 (minimal)
         run: |
-          yarn workspace example-basic add esbuild@0.12
-          yarn workspace example-basic build
+          pnpm --filter example-basic add esbuild@0.12
+          pnpm --filter example-basic build

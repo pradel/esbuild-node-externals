@@ -24,23 +24,27 @@ jobs:
         uses: actions/checkout@v5
         if: ${{ fromJSON(steps.release.outputs.releases_created) }}
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        if: ${{ fromJSON(steps.release.outputs.releases_created) }}
+
       - name: Use Node 24
         uses: actions/setup-node@v5
         with:
           node-version: 24.x
-          cache: 'yarn'
+          cache: 'pnpm'
         if: ${{ fromJSON(steps.release.outputs.releases_created) }}
 
       - name: Install dependencies
-        run: yarn install --immutable
+        run: pnpm install --frozen-lockfile
         if: ${{ fromJSON(steps.release.outputs.releases_created) }}
 
       - name: Build esbuild-node-externals
-        run: yarn workspace esbuild-node-externals build
+        run: pnpm --filter esbuild-node-externals build
         if: ${{ fromJSON(steps.release.outputs.releases_created) }}
 
       - name: Publish esbuild-node-externals npm package
-        run: yarn workspace esbuild-node-externals npm publish
+        run: pnpm --filter esbuild-node-externals publish --no-git-checks
         env:
           # Use OIDC for npm authentication instead of NPM_TOKEN
           NPM_TOKEN: '' # https://github.com/changesets/changesets/issues/1152#issuecomment-3190884868

@@ -15,8 +15,8 @@ This plugin requires minimum **Node.js 12**, and **Esbuild 0.12+**.
 # with npm
 npm install --save-dev esbuild-node-externals
 
-# with yarn
-yarn add --dev esbuild-node-externals
+# with pnpm
+pnpm add -D esbuild-node-externals
 ```
 
 ## Usage
