@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.23.1](https://github.com/pradel/esbuild-node-externals/compare/esbuild-node-externals-v1.23.0...esbuild-node-externals-v1.23.1) (2026-06-13)
+
+
+### Bug Fixes
+
+* fix ci to release new version ([048a9eb](https://github.com/pradel/esbuild-node-externals/commit/048a9eb2f0e7f8af7fb4fd6aa110eeb0e218c9f5))
+
 ## [1.23.0](https://github.com/pradel/esbuild-node-externals/compare/esbuild-node-externals-v1.22.0...esbuild-node-externals-v1.23.0) (2026-06-13)
 
 
