@@ -5,7 +5,7 @@ import {
   findDependencies,
   type AllowList,
   createAllowPredicate,
-} from './utils';
+} from './utils.js';
 
 export interface Options {
   packagePath?: string | string[];
