@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 
 import { build } from 'esbuild';
 import { nodeExternalsPlugin } from 'esbuild-node-externals';
-import { describe, it } from 'vitest';
+import { describe, it } from 'vite-plus/test';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
