@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/pradel/esbuild-node-externals/compare/esbuild-node-externals-v1.23.1...esbuild-node-externals-v2.0.0) (2026-08-04)
+
+
+### ⚠ BREAKING CHANGES
+
+* migrate package to esm-only ([#92](https://github.com/pradel/esbuild-node-externals/issues/92))
+
+### Features
+
+* migrate package to esm-only ([#92](https://github.com/pradel/esbuild-node-externals/issues/92)) ([f3a5526](https://github.com/pradel/esbuild-node-externals/commit/f3a5526fa1f88f2d91a359695b3a77bd9e9c6da8))
+
 ## [1.23.1](https://github.com/pradel/esbuild-node-externals/compare/esbuild-node-externals-v1.23.0...esbuild-node-externals-v1.23.1) (2026-06-13)
 
 
