@@ -1,0 +1,121 @@
+name: npm publish from PR
+
+on:
+  workflow_dispatch:
+    inputs:
+      link:
+        description: 'github commit link (e.g. https://github.com/org/repo/pull/77/commits/<sha>)'
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      commit: ${{ steps.extract.outputs.commit }}
+      shashort: ${{ steps.extract.outputs.shashort }}
+      repo: ${{ steps.extract.outputs.repo }}
+      pr: ${{ steps.extract.outputs.pr }}
+    steps:
+      - name: Extract repo, PR number, and commit
+        id: extract
+        env:
+          LINK: ${{ github.event.inputs.link }}
+        run: |
+          node -e '
+            const fs = require("fs");
+
+            const link = (process.env.LINK || "").trim();
+            if (!link) {
+              console.error("❌ Missing input link");
+              process.exit(1);
+            }
+
+            // Match patterns like:
+            // https://github.com/org/repo/pull/77/commits/c71529d76a625b56acb9a2eea864b1922f005766
+            const m = link.match(/^https:\/\/github\.com\/([^/]+\/[^/]+)\/pull\/(\d+)\/commits\/([0-9a-f]{5,40})(?:$|[?#])/);
+
+            if (!m) {
+              console.error("❌ Invalid GitHub commit link format:", link);
+              process.exit(1);
+            }
+
+            const repo = m[1];
+            const pr = m[2];
+            const commit = m[3];
+            const shashort = commit.slice(0, 7);
+
+            console.log("✅ Extracted:");
+            console.log("  repo:", repo);
+            console.log("  pr:", pr);
+            console.log("  commit:", commit);
+            console.log("  shashort:", shashort);
+
+            fs.appendFileSync(process.env.GITHUB_OUTPUT,
+              `repo=${repo}\npr=${pr}\ncommit=${commit}\nshashort=${shashort}\n`
+            );
+          '
+
+      - name: Use Node.js 24
+        uses: actions/setup-node@v5
+        with:
+          node-version: 24
+
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          repository: ${{ steps.extract.outputs.repo }}
+          ref: ${{ steps.extract.outputs.commit }}
+          persist-credentials: false
+
+      - name: Install & Build
+        run: |
+          yarn install --immutable
+          yarn workspace esbuild-node-externals build
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: build-pr-${{ github.run_id }}
+          path: |
+            esbuild-node-externals
+          retention-days: 1
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      checks: read
+      statuses: write
+      contents: write
+      packages: write
+      id-token: write
+    steps:
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+      - uses: actions/download-artifact@v5
+        with:
+          name: build-pr-${{ github.run_id }}
+
+      - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Add notice
+        run: |
+          node -e "const fs = require('fs'); fs.writeFileSync('./README.md', process.env.NOTICE + fs.readFileSync('./README.md', 'utf8'))"
+        env:
+          NOTICE: "> ⚠️ **This is a snapshot version from**  \n> ${{ github.event.inputs.link }}\n\n"
+
+      - name: Publish snapshot
+        run: |
+          VERSION=$(jq -r '.version' package.json)
+          SHA="${{ needs.build.outputs.shashort }}" 
+          PR="${{ needs.build.outputs.pr }}" 
+          SNAPSHOT_VERSION="${VERSION}-pr.${PR}-${SHA}"
+
+          echo "Using version: $SNAPSHOT_VERSION"
+          npm version "$SNAPSHOT_VERSION" --no-git-tag-version
+          npm publish --provenance --access=public --no-git-tag-version --tag pr
